@@ -1,1 +1,1 @@
-# RapidPrototype-1
+# Rapid Game Prototyping - Week 1
