@@ -9,10 +9,15 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        playerMovement = GetComponent<PlayerMovement>();
-        playerLook = GetComponent<PlayerLook>();
+        
     }
 
+    private void Start()
+    {
+        playerMovement = GetComponent<PlayerMovement>();
+        playerLook = GetComponent<PlayerLook>();
+        LockCursorState();
+    }
     private void Update()
     {
         playerLook.HandleMouseLook();
@@ -21,5 +26,15 @@ public class Player : MonoBehaviour
     public Transform GetCameraTransform()
     {
         return cameraTransform;
+    }
+    public void LockCursorState()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+    public void UnlockCursorState()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 }
