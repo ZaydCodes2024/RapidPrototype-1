@@ -7,13 +7,21 @@ using UnityEngine.InputSystem;
 public class GameInput : MonoBehaviour
 {
     public static GameInput Instance {get; private set;}
+    public event EventHandler OnAttackAction;
     private InputSystem_Actions playerInputActions;
     private void Awake()
     {
         Instance = this;
         playerInputActions = new InputSystem_Actions();
         playerInputActions.Enable();
+        playerInputActions.Player.Attack.performed += PlayerInputActions_Performed;
     }
+
+    private void PlayerInputActions_Performed(InputAction.CallbackContext context)
+    {
+        OnAttackAction?.Invoke(this, EventArgs.Empty);
+    }
+
     public Vector2 GetMovementVectorNormalized()
     {
         Vector2 inputVector = playerInputActions.Player.Move.ReadValue<Vector2>().normalized;

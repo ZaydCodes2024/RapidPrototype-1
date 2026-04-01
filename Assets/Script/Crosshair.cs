@@ -25,10 +25,11 @@ public class Crosshair : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            if (hit.transform.TryGetComponent(out Transform transform))
-            {
-                Debug.Log(hit.transform.gameObject.name);
-            }
+            InteractionController.Instance.HandleInteractions(hit);
+        }
+        else
+        {
+            InteractionController.Instance.ClearInteractions();
         }
     }
 }
