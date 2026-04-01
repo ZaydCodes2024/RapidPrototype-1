@@ -69,7 +69,6 @@ public class PlayerMovement : MonoBehaviour
         float moveDistance = moveSpeed * Time.deltaTime;
         float playerRadius = 0.7f;
         float playerHeight = 1f;
-        // float jumpHeight = 2f;
         float groundCheckDistance = 1f;
 
         // currentHeight = isCrouching ? crouchHeight : playerHeight;

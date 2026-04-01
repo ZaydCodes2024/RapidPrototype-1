@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class InteractionController : MonoBehaviour
 {
+    [SerializeField] private WeaponController weaponController;
     public static InteractionController Instance {get; private set;}
     private IHealth health;
     private void Awake()
@@ -16,15 +17,14 @@ public class InteractionController : MonoBehaviour
 
     private void GameInput_OnAttackAction(object sender, EventArgs e)
     {
-        if (IsHealthEmpty())     return;
-
-        health.TakeDamage(10f);
+        if (weaponController.IsWeaponEquipped())
+        {
+            Debug.Log("No weapons Equipped");
+            return;    
+        }
+        health?.TakeDamage(weaponController.GetWeaponDamage());
     }
     
-    public bool IsHealthEmpty()
-    {
-        return health == null;
-    }
     public void HandleInteractions(RaycastHit hit)
     {
         if (hit.transform.TryGetComponent(out IHealth healthObj))
