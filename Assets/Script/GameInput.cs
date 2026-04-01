@@ -8,16 +8,24 @@ public class GameInput : MonoBehaviour
 {
     public static GameInput Instance {get; private set;}
     public event EventHandler OnAttackAction;
+    public event EventHandler OnJumpAction;
     private InputSystem_Actions playerInputActions;
+
     private void Awake()
     {
         Instance = this;
         playerInputActions = new InputSystem_Actions();
         playerInputActions.Enable();
-        playerInputActions.Player.Attack.performed += PlayerInputActions_Performed;
+        playerInputActions.Player.Attack.performed += Attack_Performed;
+        playerInputActions.Player.Jump.performed += Jump_Performed;
     }
 
-    private void PlayerInputActions_Performed(InputAction.CallbackContext context)
+    private void Jump_Performed(InputAction.CallbackContext context)
+    {
+        OnJumpAction?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void Attack_Performed(InputAction.CallbackContext context)
     {
         OnAttackAction?.Invoke(this, EventArgs.Empty);
     }

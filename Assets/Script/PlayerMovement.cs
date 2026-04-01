@@ -8,6 +8,11 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float walkSpeed;
     [SerializeField] private float runSpeed;
+    [SerializeField] private float jumpForce;
+    [SerializeField] private LayerMask groundLayerMask;
+    [SerializeField] private float gravityScale = 1.5f;
+    private bool isGrounded;
+    private Rigidbody playerRb;
     // public event EventHandler OnCrouchDown;
     // public event EventHandler OnCrouchUp;
     // private bool isCrouching;
@@ -16,6 +21,23 @@ public class PlayerMovement : MonoBehaviour
     // private float crouchHeight = 0.25f;
     // private float crouchSpeed = 2.5f;
     // private bool isWalking;
+
+    private void Awake()
+    {
+        playerRb = GetComponent<Rigidbody>();
+    }
+    private void Start()
+    {
+        GameInput.Instance.OnJumpAction += GameInput_OnJumpaction;
+    }
+
+    private void GameInput_OnJumpaction(object sender, EventArgs e)
+    {
+        if (isGrounded)
+        {
+            playerRb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+        }
+    }
 
     public void HandleMovement()
     {
@@ -47,11 +69,17 @@ public class PlayerMovement : MonoBehaviour
         float moveDistance = moveSpeed * Time.deltaTime;
         float playerRadius = 0.7f;
         float playerHeight = 1f;
+        // float jumpHeight = 2f;
+        float groundCheckDistance = 1f;
 
         // currentHeight = isCrouching ? crouchHeight : playerHeight;
 
         bool canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDir, moveDistance);
-        
+        Vector3 origin = transform.position + Vector3.down * 0.1f;
+        isGrounded = Physics.Raycast(origin, Vector3.down, groundCheckDistance, groundLayerMask);
+
+        Debug.DrawRay(origin, Vector3.down * groundCheckDistance, Color.red);
+
         if (!canMove) // Cannot move towards moveDir
         {
             Vector3 moveDirX = new Vector3(moveDir.x,0,0).normalized; // Attempt only X movement
@@ -78,7 +106,8 @@ public class PlayerMovement : MonoBehaviour
         }
         if (canMove)
         {
-            transform.position += moveDir * moveDistance;
+            playerRb.MovePosition(playerRb.position + moveDir * moveDistance);
+            playerRb.AddForce(Physics.gravity * (gravityScale - 1) * Time.deltaTime, ForceMode.Acceleration);
         }
 
         // isWalking = moveDir != Vector3.zero;
