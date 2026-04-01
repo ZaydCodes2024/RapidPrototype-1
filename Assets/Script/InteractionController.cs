@@ -16,12 +16,12 @@ public class InteractionController : MonoBehaviour
 
     private void GameInput_OnAttackAction(object sender, EventArgs e)
     {
-        if (IsHealth())     return;
+        if (IsHealthEmpty())     return;
 
         health.TakeDamage(10f);
     }
     
-    public bool IsHealth()
+    public bool IsHealthEmpty()
     {
         return health == null;
     }
