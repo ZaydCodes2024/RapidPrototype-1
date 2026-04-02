@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class Crosshair : MonoBehaviour
 {
-    [SerializeField] Camera playerCamera;
-    [SerializeField] Texture2D crosshairTexture;
+    [SerializeField] private Camera playerCamera;
+    [SerializeField] private Texture2D crosshairTexture;
     [SerializeField] float crosshairScale = 1f;
     private GUIStyle crosshairStyle = new GUIStyle();
     private void OnGUI()
@@ -12,14 +12,21 @@ public class Crosshair : MonoBehaviour
         Vector2 pivotPoint = new Vector2(crosshairStyle.normal.background.width / 2, crosshairStyle.normal.background.height / 2);
         Vector2 position = new Vector2(Screen.width / 2 - pivotPoint.x * crosshairScale, Screen.height / 2 - pivotPoint.y * crosshairScale);
 
+        if (InteractionController.Instance.IsAimingAtHealth)
+            GUI.color = Color.red;
+        else
+            GUI.color = Color.white;
+        
         GUI.DrawTexture(new Rect(position.x, position.y, crosshairStyle.normal.background.width * crosshairScale, crosshairStyle.normal.background.height * crosshairScale), crosshairStyle.normal.background);
+        GUI.color = Color.white;
+        
     }
     private void Update()
     {
         PerformRayCast();
     }
 
-    void PerformRayCast()
+    private void PerformRayCast()
     {
         Ray ray = playerCamera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
 

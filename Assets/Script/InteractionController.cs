@@ -4,7 +4,9 @@ using UnityEngine;
 public class InteractionController : MonoBehaviour
 {
     [SerializeField] private WeaponController weaponController;
+    [SerializeField] private Crosshair crosshair;
     public static InteractionController Instance {get; private set;}
+    public bool IsAimingAtHealth { get; private set; }
     private IHealth health;
     private void Awake()
     {
@@ -30,11 +32,18 @@ public class InteractionController : MonoBehaviour
         if (hit.transform.TryGetComponent(out IHealth healthObj))
         {
             health = healthObj;
+            IsAimingAtHealth = true;
         }
+        else
+        {
+            IsAimingAtHealth = false;
+        }
+        
     }
 
     public void ClearInteractions()
     {
         health = null;
+        IsAimingAtHealth = false;
     }
 }

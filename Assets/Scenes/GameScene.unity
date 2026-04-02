@@ -341,6 +341,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractionController
   weaponController: {fileID: 77030328}
+  crosshair: {fileID: 11766535}
 --- !u!114 &11766537
 MonoBehaviour:
   m_ObjectHideFlags: 0
