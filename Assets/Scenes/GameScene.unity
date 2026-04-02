@@ -129,6 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 11766527}
   - component: {fileID: 11766528}
+  - component: {fileID: 11766537}
   - component: {fileID: 11766530}
   - component: {fileID: 11766529}
   - component: {fileID: 11766535}
@@ -340,6 +341,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractionController
   weaponController: {fileID: 77030328}
+--- !u!114 &11766537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 11766526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b82d3b89df1c4631a4bb8cdf4f6e75a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
 --- !u!1 &77030326
 GameObject:
   m_ObjectHideFlags: 0
