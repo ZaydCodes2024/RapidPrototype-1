@@ -4,7 +4,6 @@ using UnityEngine;
 public class InteractionController : MonoBehaviour
 {
     [SerializeField] private WeaponController weaponController;
-    [SerializeField] private Crosshair crosshair;
     public static InteractionController Instance {get; private set;}
     public bool IsAimingAtHealth { get; private set; }
     private IHealth health;
