@@ -6,6 +6,7 @@ public class InteractionController : MonoBehaviour
     [SerializeField] private WeaponController weaponController;
     public static InteractionController Instance {get; private set;}
     public bool IsAimingAtHealth { get; private set; }
+    public event EventHandler OnGunfired;
     private IHealth health;
     private void Awake()
     {
@@ -23,6 +24,7 @@ public class InteractionController : MonoBehaviour
             Debug.Log("No weapons Equipped");
             return;    
         }
+        OnGunfired?.Invoke(this, EventArgs.Empty);
         health?.TakeDamage(weaponController.GetWeaponDamage());
     }
     
