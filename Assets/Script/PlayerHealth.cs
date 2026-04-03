@@ -6,7 +6,6 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(float damage)
     {
         health -= damage;
-        Debug.Log($"Damage dealt to {gameObject.name}, health: {health} ");
     }
 
     public float GetPlayerHealth()
