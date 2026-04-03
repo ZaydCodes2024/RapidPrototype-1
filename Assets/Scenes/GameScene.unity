@@ -397,6 +397,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 336df1d79b7934c5ab910c9816255af9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponController
+  weaponTip: {fileID: 1606186858}
+  bulletPrefab: {fileID: 349771510496782575, guid: 8b5f25f32508549129681f1033acb627, type: 3}
+  bulletSpeed: 500
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -759,9 +762,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Weapon
   weaponPosition: {fileID: 77030327}
-  weaponTip: {fileID: 1606186858}
-  bulletPrefab: {fileID: 349771510496782575, guid: 8b5f25f32508549129681f1033acb627, type: 3}
-  bulletSpeed: 500
 --- !u!1 &1460333062
 GameObject:
   m_ObjectHideFlags: 0
