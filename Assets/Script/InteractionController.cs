@@ -6,6 +6,7 @@ public class InteractionController : MonoBehaviour
     [SerializeField] private WeaponController weaponController;
     public static InteractionController Instance {get; private set;}
     public bool IsAimingAtHealth { get; private set; }
+    public Vector3 hitPoint { get; private set; }
     public event EventHandler OnGunfired;
     private IHealth health;
     private void Awake()
@@ -30,6 +31,8 @@ public class InteractionController : MonoBehaviour
     
     public void HandleInteractions(RaycastHit hit)
     {
+        hitPoint = hit.point;
+
         if (hit.transform.TryGetComponent(out IHealth healthObj))
         {
             health = healthObj;
@@ -39,12 +42,12 @@ public class InteractionController : MonoBehaviour
         {
             IsAimingAtHealth = false;
         }
-        
     }
 
-    public void ClearInteractions()
+    public void ClearInteractions(Transform cameraTransform)
     {
         health = null;
         IsAimingAtHealth = false;
+        hitPoint = cameraTransform.position + cameraTransform.forward * 1000f;
     }
 }

@@ -22,6 +22,9 @@ public class WeaponController : MonoBehaviour
         Transform bulletTransform = Instantiate(bulletPrefab, weaponTip.position, weaponTip.rotation);
         Rigidbody bulletRb = bulletTransform.GetComponent<Rigidbody>();
         TrailRenderer trailRenderer = bulletTransform.GetComponent<TrailRenderer>();
+        Vector3 targetPoint = InteractionController.Instance.hitPoint;
+        Vector3 direction = (targetPoint - weaponTip.position).normalized;
+
         float travelTime = 0.1f;
 
         if (trailRenderer != null)
@@ -31,7 +34,7 @@ public class WeaponController : MonoBehaviour
 
         bulletTransform.gameObject.SetActive(true);
 
-        bulletRb.AddForce(transform.forward * bulletSpeed, ForceMode.Impulse);
+        bulletRb.AddForce(direction * bulletSpeed, ForceMode.Impulse);
 
         Destroy(bulletTransform.gameObject, travelTime);
         

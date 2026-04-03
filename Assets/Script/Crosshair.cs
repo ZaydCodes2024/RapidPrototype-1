@@ -6,6 +6,7 @@ public class Crosshair : MonoBehaviour
     [SerializeField] private Texture2D crosshairTexture;
     [SerializeField] float crosshairScale = 1f;
     private GUIStyle crosshairStyle = new GUIStyle();
+    private RaycastHit hit;
     private void OnGUI()
     {
         crosshairStyle.normal.background = crosshairTexture;
@@ -30,13 +31,13 @@ public class Crosshair : MonoBehaviour
     {
         Ray ray = playerCamera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
 
-        if (Physics.Raycast(ray, out RaycastHit hit))
+        if (Physics.Raycast(ray, out hit))
         {
             InteractionController.Instance.HandleInteractions(hit);
         }
         else
         {
-            InteractionController.Instance.ClearInteractions();
+            InteractionController.Instance.ClearInteractions(playerCamera.transform);
         }
     }
 }
