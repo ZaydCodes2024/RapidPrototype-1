@@ -21,7 +21,6 @@ public class Enemy : MonoBehaviour, IHealth
     public void TakeDamage(float damage)
     {
         health -= damage;
-        // Debug.Log($"Damage dealt to {gameObject.name}, health: {health} ");
 
         if (health <= 0)
         {
