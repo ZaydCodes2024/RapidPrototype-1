@@ -20,6 +20,12 @@ public class GameInput : MonoBehaviour
         playerInputActions.Player.Jump.performed += Jump_Performed;
     }
 
+    private void OnDestroy()
+    {
+        playerInputActions.Player.Attack.performed -= Attack_Performed;
+        playerInputActions.Player.Jump.performed -= Jump_Performed;
+        playerInputActions.Dispose();
+    }
     private void Jump_Performed(InputAction.CallbackContext context)
     {
         OnJumpAction?.Invoke(this, EventArgs.Empty);

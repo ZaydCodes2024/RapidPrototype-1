@@ -1,18 +1,57 @@
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private Transform enemyPrefab;
+    [SerializeField] private PlayerHealth playerHealth;
     [SerializeField] private float minSpawnDistance;
     [SerializeField] private float maxSpawnDistance;
     [SerializeField] private float minSpawnHeight;
     [SerializeField] private float maxSpawnHeight;
+    [SerializeField] private TextMeshProUGUI gameStartTimerText;
     private float spawnTimer;
-    private float spawnTimerMax = 5f;
-
+    private float spawnTimerMax = 2f;
+    private float waitingToStartTimer = 3f;
+    private enum State
+    {
+        WaitingToStart, GamePlaying, GameOver
+    }
+    private State state;
+    private void Awake()
+    {
+        state = State.WaitingToStart;
+    }
     private void Update()
     {
-        SpawnEnemy();
+        switch (state)
+        {
+           case State.WaitingToStart:
+                waitingToStartTimer -= Time.deltaTime;
+
+                gameStartTimerText.text = Mathf.CeilToInt(waitingToStartTimer).ToString();
+
+                if (waitingToStartTimer <= 0)
+                {
+                    gameStartTimerText.gameObject.SetActive(false);
+                    state = State.GamePlaying;
+                }
+                break;
+
+            case State.GamePlaying:
+                SpawnEnemy();
+
+                if (playerHealth.GetPlayerHealth() <= 0)
+                {
+                    state = State.GameOver;
+                }
+                break;
+            
+            case State.GameOver:
+                Loader.Load(Loader.Scene.GameOverScene);
+                break;
+        }
+        
     }
     private void SpawnEnemy()
     {
