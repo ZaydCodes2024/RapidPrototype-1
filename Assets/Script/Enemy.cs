@@ -1,5 +1,4 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour, IHealth
@@ -10,6 +9,7 @@ public class Enemy : MonoBehaviour, IHealth
     private float maxHealth = 100f;
     private float enemyDamage = 10f;
     private Rigidbody enemyRb;
+    public static event EventHandler OnKilledByPlayer;
     private void Awake()
     {
         enemyRb = GetComponent<Rigidbody>();
@@ -26,7 +26,7 @@ public class Enemy : MonoBehaviour, IHealth
         if (health <= 0)
         {
             health = maxHealth;
-            DestroySelf();
+            KilledByPlayer();
         }
     }
     private void OnCollisionEnter(Collision collision)
@@ -36,7 +36,7 @@ public class Enemy : MonoBehaviour, IHealth
         if (collision.gameObject.TryGetComponent(out PlayerHealth playerHealth))
         {
             playerHealth.TakeDamage(enemyDamage);
-            DestroySelf();
+            Destroy(gameObject);
         }
     } 
 
@@ -56,8 +56,9 @@ public class Enemy : MonoBehaviour, IHealth
             enemyRb.MovePosition(nextPosition);
         }
     }
-    private void DestroySelf()
+    private void KilledByPlayer()
     {
         Destroy(gameObject);
+        OnKilledByPlayer?.Invoke(this, EventArgs.Empty);
     }
 }

@@ -10,9 +10,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float minSpawnHeight;
     [SerializeField] private float maxSpawnHeight;
     [SerializeField] private TextMeshProUGUI gameStartTimerText;
+    public static GameManager Instance {get; private set;}
     private float spawnTimer;
     private float spawnTimerMax = 2f;
     private float waitingToStartTimer = 3f;
+    private int enemyCount;
     private enum State
     {
         WaitingToStart, GamePlaying, GameOver
@@ -20,8 +22,19 @@ public class GameManager : MonoBehaviour
     private State state;
     private void Awake()
     {
+        Instance = this;
         state = State.WaitingToStart;
     }
+    private void Start()
+    {
+        Enemy.OnKilledByPlayer += Enemy_OnKilledByPlayer;
+    }
+
+    private void Enemy_OnKilledByPlayer(object sender, System.EventArgs e)
+    {
+        enemyCount++;
+    }
+
     private void Update()
     {
         switch (state)
@@ -72,5 +85,10 @@ public class GameManager : MonoBehaviour
             Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
             spawnTimer = spawnTimerMax;
         }
+    }
+
+    public int GetEnemyKilledCount()
+    {
+        return enemyCount;
     }
 }
