@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     private float spawnTimer;
     private float spawnTimerMax = 2f;
     private float waitingToStartTimer = 3f;
+    private float countdownStartTimer = 2f;
     private int enemyCount;
     private enum State
     {
@@ -40,14 +41,18 @@ public class GameManager : MonoBehaviour
         switch (state)
         {
            case State.WaitingToStart:
-                waitingToStartTimer -= Time.deltaTime;
-
+                countdownStartTimer -= Time.deltaTime;
                 gameStartTimerText.text = Mathf.CeilToInt(waitingToStartTimer).ToString();
 
-                if (waitingToStartTimer <= 0)
+                if (countdownStartTimer <= 0)
                 {
-                    gameStartTimerText.gameObject.SetActive(false);
-                    state = State.GamePlaying;
+                    waitingToStartTimer -= Time.deltaTime;
+
+                    if (waitingToStartTimer <= 0)
+                    {
+                        gameStartTimerText.gameObject.SetActive(false);
+                        state = State.GamePlaying;
+                    }
                 }
                 break;
 
