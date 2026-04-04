@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour, IHealth
     private float enemyDamage = 10f;
     private Rigidbody enemyRb;
     public static event EventHandler OnKilledByPlayer;
+    public static event EventHandler OnDestroyed;
     private void Awake()
     {
         enemyRb = GetComponent<Rigidbody>();
@@ -36,6 +37,7 @@ public class Enemy : MonoBehaviour, IHealth
         {
             playerHealth.TakeDamage(enemyDamage);
             Destroy(gameObject);
+            OnDestroyed?.Invoke(this, EventArgs.Empty);
         }
     } 
 
@@ -57,7 +59,7 @@ public class Enemy : MonoBehaviour, IHealth
     }
     private void KilledByPlayer()
     {
-        Destroy(gameObject);
         OnKilledByPlayer?.Invoke(this, EventArgs.Empty);
+        Destroy(gameObject);
     }
 }

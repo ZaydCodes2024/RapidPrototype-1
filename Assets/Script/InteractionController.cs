@@ -26,7 +26,11 @@ public class InteractionController : MonoBehaviour
             return;    
         }
         OnGunfired?.Invoke(this, EventArgs.Empty);
-        health?.TakeDamage(weaponController.GetWeaponDamage());
+
+        if (health != null)
+        {
+            health.TakeDamage(weaponController.GetWeaponDamage());
+        }
     }
     
     public void HandleInteractions(RaycastHit hit)
@@ -41,6 +45,7 @@ public class InteractionController : MonoBehaviour
         else
         {
             IsAimingAtHealth = false;
+            ClearInteractions(Player.Instance.GetCameraTransform());
         }
     }
 
