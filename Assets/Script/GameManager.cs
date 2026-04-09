@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        gameStartTimerText.gameObject.SetActive(false);
         state = State.WaitingToStart;
     }
     private void Start()
@@ -69,6 +70,7 @@ public class GameManager : MonoBehaviour
 
                 if (countdownStartTimer <= 0)
                 {
+                    gameStartTimerText.gameObject.SetActive(true);
                     waitingToStartTimer -= Time.deltaTime;
 
                     if (waitingToStartTimer <= 0)
@@ -150,8 +152,6 @@ public class GameManager : MonoBehaviour
     }
     private void StartRound()
     {
-        Debug.Log("Round " + currentRound + " START");
-
         isRoundStarting = true;
         isRoundActive = false;
 
@@ -164,7 +164,6 @@ public class GameManager : MonoBehaviour
     }
     private void EndRound()
     {
-        Debug.Log("Round " + currentRound + " END");
         isRoundActive = false;
         roundTimer = timeBetweenRounds;
     }
