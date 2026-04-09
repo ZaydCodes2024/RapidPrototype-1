@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask groundLayerMask;
     [SerializeField] private float gravityScale = 1.5f;
     private bool isGrounded;
+    private bool isWalking;
     private Rigidbody playerRb;
     // public event EventHandler OnCrouchDown;
     // public event EventHandler OnCrouchUp;
@@ -20,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
     // private float lerpSpeed = 10f;
     // private float crouchHeight = 0.25f;
     // private float crouchSpeed = 2.5f;
-    // private bool isWalking;
+    
 
     private void Awake()
     {
@@ -109,10 +110,15 @@ public class PlayerMovement : MonoBehaviour
             playerRb.AddForce(Physics.gravity * (gravityScale - 1) * Time.deltaTime, ForceMode.Acceleration);
         }
 
-        // isWalking = moveDir != Vector3.zero;
+        isWalking = moveDir != Vector3.zero;
 
         // float targetHeight = isCrouching ? crouchHeight : playerHeight;
         // Player.Instance.GetCameraTransform().localPosition = Vector3.Slerp(Player.Instance.GetCameraTransform().localPosition, new Vector3(0, targetHeight, 0), Time.deltaTime * lerpSpeed);
 
+    }
+
+    public bool IsWalking()
+    {
+        return isWalking;
     }
 }

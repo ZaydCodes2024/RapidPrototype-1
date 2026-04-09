@@ -4,6 +4,7 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     [SerializeField] private Transform weaponPosition;
+    [SerializeField] private WeaponController weaponController;
     private void Awake()
     {
         SetWeaponPositionOnPlayer();
@@ -13,7 +14,7 @@ public class Weapon : MonoBehaviour
         transform.SetParent(weaponPosition);
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
-        weaponPosition.GetComponent<WeaponController>().SetWeapon(this);
+        weaponController.SetWeapon(this);
     }
     
 }
