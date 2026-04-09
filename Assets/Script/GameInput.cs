@@ -10,7 +10,7 @@ public class GameInput : MonoBehaviour
     public event EventHandler OnAttackAction;
     public event EventHandler OnJumpAction;
     private InputSystem_Actions playerInputActions;
-
+    private bool isSprinting;
     private void Awake()
     {
         Instance = this;
@@ -43,7 +43,24 @@ public class GameInput : MonoBehaviour
     }
     public float GetMovementSpeed(float runspeed, float walkSpeed)
     {
-        float movementSpeed = playerInputActions.Player.Sprint.IsPressed() ? runspeed : walkSpeed;
+        float movementSpeed;
+
+        if (playerInputActions.Player.Sprint.IsPressed())
+        {
+            movementSpeed = runspeed;
+            isSprinting = true;
+        }
+        else
+        {
+            movementSpeed = walkSpeed;
+            isSprinting = false;
+        }
+        
         return  movementSpeed;
+    }
+
+    public bool IsSprinting()
+    {
+        return isSprinting;
     }
 }
