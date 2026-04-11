@@ -413,7 +413,7 @@ Animator:
   m_GameObject: {fileID: 77030326}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 00a33e411466944aba2d3e38c71636d4, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -434,10 +434,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 77030326}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ff09cea1817a4af4ac7d91c470900e6, type: 3}
+  m_Script: {fileID: 11500000, guid: 4a85045bd3e6f4ca8ac10df01dede340, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WeaponVisualAnimator
-  player: {fileID: 11766529}
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerWeaponAnimations
+  animationClips:
+  - {fileID: 7400000, guid: e9f7bf59f715747e29ccc453b6a9bf1c, type: 2}
+  - {fileID: 7400000, guid: 9854ca08e1aed40f09ee6731835bfef0, type: 2}
+  playerMovement: {fileID: 11766529}
 --- !u!1 &558073021
 GameObject:
   m_ObjectHideFlags: 0

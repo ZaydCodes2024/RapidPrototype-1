@@ -6,13 +6,13 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public static PlayerMovement Instance {get; private set;}
     [SerializeField] private float walkSpeed;
     [SerializeField] private float runSpeed;
     [SerializeField] private float jumpForce;
     [SerializeField] private LayerMask groundLayerMask;
     [SerializeField] private float gravityScale = 1.5f;
     private bool isGrounded;
-    private bool isWalking;
     private Rigidbody playerRb;
     // public event EventHandler OnCrouchDown;
     // public event EventHandler OnCrouchUp;
@@ -26,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         playerRb = GetComponent<Rigidbody>();
+        Instance = this;
     }
     private void Start()
     {
@@ -65,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
             
         // }
 
-        moveSpeed = GameInput.Instance.GetMovementSpeed(runSpeed,walkSpeed);
+        moveSpeed = GameInput.Instance.GetMovementSpeed();
 
         float moveDistance = moveSpeed * Time.deltaTime;
         float playerRadius = 0.7f;
@@ -110,15 +111,18 @@ public class PlayerMovement : MonoBehaviour
             playerRb.AddForce(Physics.gravity * (gravityScale - 1) * Time.deltaTime, ForceMode.Acceleration);
         }
 
-        isWalking = moveDir != Vector3.zero;
-
         // float targetHeight = isCrouching ? crouchHeight : playerHeight;
         // Player.Instance.GetCameraTransform().localPosition = Vector3.Slerp(Player.Instance.GetCameraTransform().localPosition, new Vector3(0, targetHeight, 0), Time.deltaTime * lerpSpeed);
 
     }
 
-    public bool IsWalking()
+    public float GetWalkSpeed()
     {
-        return isWalking;
+        return walkSpeed;
+    }
+
+    public float GetRunSpeed()
+    {
+        return runSpeed;
     }
 }
