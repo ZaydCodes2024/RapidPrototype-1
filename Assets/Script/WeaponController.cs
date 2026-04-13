@@ -25,7 +25,7 @@ public class WeaponController : MonoBehaviour
         Vector3 targetPoint = InteractionController.Instance.hitPoint;
         Vector3 direction = (targetPoint - weaponTip.position).normalized;
 
-        float travelTime = 0.1f;
+        float travelTime = 0.04f;
 
         if (trailRenderer != null)
         {
