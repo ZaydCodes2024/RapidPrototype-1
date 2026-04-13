@@ -125,4 +125,9 @@ public class PlayerMovement : MonoBehaviour
     {
         return runSpeed;
     }
+
+    public bool IsGrounded()
+    {
+        return isGrounded;
+    }
 }

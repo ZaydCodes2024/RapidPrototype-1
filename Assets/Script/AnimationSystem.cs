@@ -3,6 +3,7 @@ using UnityEngine.Animations;
 using UnityEngine.Playables;
 using MEC;
 using System.Collections.Generic;
+using System;
 public class AnimationSystem
 {
     private PlayableGraph playableGraph;
@@ -38,6 +39,11 @@ public class AnimationSystem
         }
         
         playableGraph.Play();
+        
+        oneShotPlayable = AnimationClipPlayable.Create(playableGraph, animationClip[0]); // dummy clip
+
+        topLevelMixer.ConnectInput(1, oneShotPlayable, 0);
+        topLevelMixer.SetInputWeight(1, 0f);
     }
     
     public void UpdateLocomotion() 
@@ -50,6 +56,71 @@ public class AnimationSystem
        float weight = Mathf.InverseLerp(0f, PlayerMovement.Instance.GetRunSpeed(), currentSpeed);
        locomotionMixer.SetInputWeight(0, 1f - weight);
        locomotionMixer.SetInputWeight(1, weight);
+    }
+    public void PlayOneShot(AnimationClip oneShotClip) 
+    {
+        if (oneShotPlayable.IsValid() && oneShotPlayable.GetAnimationClip() == oneShotClip) return;
+        
+        InterruptOneShot();
+        oneShotPlayable = AnimationClipPlayable.Create(playableGraph, oneShotClip);
+        topLevelMixer.ConnectInput(1, oneShotPlayable, 0);
+        topLevelMixer.SetInputWeight(1, 1f);
+        
+        // Calculate blendDuration as 10% of clip length,
+        // but ensure that it's not less than 0.1f or more than half the clip length
+        float blendDuration = Mathf.Clamp(oneShotClip.length * 0.1f, 0.1f, oneShotClip.length * 0.5f);
+        
+        BlendIn(blendDuration);
+        BlendOut(blendDuration, oneShotClip.length - blendDuration);
+    }
+    private void BlendIn(float duration) 
+    {
+        blendInHandle = Timing.RunCoroutine(Blend(duration, blendTime => {
+            float weight = Mathf.Lerp(1f, 0f, blendTime);
+            topLevelMixer.SetInputWeight(0, weight);
+            topLevelMixer.SetInputWeight(1, 1f - weight);
+        }));
+    }
+    
+    private void BlendOut(float duration, float delay) 
+    {
+        blendOutHandle = Timing.RunCoroutine(Blend(duration, blendTime => {
+            float weight = Mathf.Lerp(0f, 1f, blendTime);
+            topLevelMixer.SetInputWeight(0, weight);
+            topLevelMixer.SetInputWeight(1, 1f - weight);
+        }, delay, DisconnectOneShot));
+    }
+    private IEnumerator<float> Blend(float duration, Action<float> blendCallback, float delay = 0f, Action finishedCallback = null) {
+        if (delay > 0f) {
+            yield return Timing.WaitForSeconds(delay);
+        }
+        
+        float blendTime = 0f;
+        while (blendTime < 1f) {
+            blendTime += Time.deltaTime / duration;
+            blendCallback(blendTime);
+            yield return Timing.WaitForOneFrame;
+        }
+        
+        blendCallback(1f);
+        
+        finishedCallback?.Invoke();
+    }
+    private void InterruptOneShot() {
+        Timing.KillCoroutines(blendInHandle);
+        Timing.KillCoroutines(blendOutHandle);
+        
+        topLevelMixer.SetInputWeight(0, 1f);
+        topLevelMixer.SetInputWeight(1, 0f);
+
+        if (oneShotPlayable.IsValid()) {
+            DisconnectOneShot();
+        }
+    }
+
+    private void DisconnectOneShot() {
+        topLevelMixer.DisconnectInput(1);
+        playableGraph.DestroyPlayable(oneShotPlayable);
     }
     public void Destroy() 
     {

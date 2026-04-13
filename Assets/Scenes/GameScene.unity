@@ -187,7 +187,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   walkSpeed: 4
-  runSpeed: 6
+  runSpeed: 8
   jumpForce: 7
   groundLayerMask:
     serializedVersion: 2
@@ -413,7 +413,7 @@ Animator:
   m_GameObject: {fileID: 77030326}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: dc1448fad6ba14aa0bb0a7357fe18ac5, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -437,9 +437,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a85045bd3e6f4ca8ac10df01dede340, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerWeaponAnimations
-  animationClips:
+  locomotionAnimationClips:
   - {fileID: 7400000, guid: e9f7bf59f715747e29ccc453b6a9bf1c, type: 2}
   - {fileID: 7400000, guid: 9854ca08e1aed40f09ee6731835bfef0, type: 2}
+  jumpClip: {fileID: 7400000, guid: 848a84d233f4b4657923a75783dabc69, type: 2}
+  landClip: {fileID: 7400000, guid: 24b115d2a30524fe4a1b5313854bce7f, type: 2}
   playerMovement: {fileID: 11766529}
 --- !u!1 &558073021
 GameObject:
@@ -1259,12 +1261,12 @@ Transform:
   m_GameObject: {fileID: 1076646295}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.53, y: 1.232, z: 0.626}
+  m_LocalPosition: {x: -3.063, y: 0, z: 0}
   m_LocalScale: {x: 0.29, y: 0.32, z: 0.92}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1606186858}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1287610073}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1076646300
 MonoBehaviour:
@@ -1445,7 +1447,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1076646299}
   m_Father: {fileID: 77030327}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1322668516
@@ -2101,7 +2104,6 @@ SceneRoots:
   - {fileID: 2094684687}
   - {fileID: 1478654042}
   - {fileID: 1700997278}
-  - {fileID: 1076646299}
   - {fileID: 1460333063}
   - {fileID: 945168539}
   - {fileID: 1473557825}
