@@ -23,6 +23,10 @@ public class SoundManager : MonoBehaviour
     {
         PlaySound(audioClipSO.footstep, position, volumeMultiplier * volume);
     }
+    public void PlayWeaponShootSound(Vector3 position, float volumeMultiplier)
+    {
+        PlaySound(audioClipSO.weaponShoot, position, volumeMultiplier * volume);
+    }
     public void ChangeVolume()
     {
         volume += .1f;

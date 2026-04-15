@@ -16,6 +16,7 @@ public class WeaponController : MonoBehaviour
     private void InteractionController_OnGunfired(object sender, EventArgs e)
     {
         FireBullet();
+        SoundManager.Instance.PlayWeaponShootSound(transform.position, 0.5f);
     }
     private void FireBullet()
     {
