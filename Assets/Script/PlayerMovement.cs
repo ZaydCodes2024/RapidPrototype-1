@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask groundLayerMask;
     [SerializeField] private float gravityScale = 1.5f;
     private bool isGrounded;
+    private bool isMoving;
     private Rigidbody playerRb;
     // public event EventHandler OnCrouchDown;
     // public event EventHandler OnCrouchUp;
@@ -111,6 +112,8 @@ public class PlayerMovement : MonoBehaviour
             playerRb.AddForce(Physics.gravity * (gravityScale - 1) * Time.deltaTime, ForceMode.Acceleration);
         }
 
+        isMoving = moveDir != Vector3.zero;
+
         // float targetHeight = isCrouching ? crouchHeight : playerHeight;
         // Player.Instance.GetCameraTransform().localPosition = Vector3.Slerp(Player.Instance.GetCameraTransform().localPosition, new Vector3(0, targetHeight, 0), Time.deltaTime * lerpSpeed);
 
@@ -129,5 +132,9 @@ public class PlayerMovement : MonoBehaviour
     public bool IsGrounded()
     {
         return isGrounded;
+    }
+    public bool IsMoving()
+    {
+        return isMoving;
     }
 }

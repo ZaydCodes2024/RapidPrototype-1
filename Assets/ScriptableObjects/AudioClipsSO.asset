@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed6b1c4769a9e43ff8ced11d5b1f8e6e, type: 3}
+  m_Name: AudioClipsSO
+  m_EditorClassIdentifier: Assembly-CSharp::AudioClipSO
+  footstep:
+  - {fileID: 8300000, guid: 5bd4b743028ff48db9ca8aa65ad7306f, type: 3}
+  - {fileID: 8300000, guid: b94eab8108d704f00acfb0556e856bea, type: 3}
+  - {fileID: 8300000, guid: 6325eefdfba754b5296d33b9ce854494, type: 3}
+  - {fileID: 8300000, guid: baa52aeda70b444f1a437992e529b9d3, type: 3}
