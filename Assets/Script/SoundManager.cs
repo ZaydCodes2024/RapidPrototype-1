@@ -21,16 +21,20 @@ public class SoundManager : MonoBehaviour
     }
     public void PlayFootstepSound(Vector3 position, float volumeMultiplier)
     {
-        PlaySound(audioClipSO.footstep, position, volumeMultiplier * volume);
+        PlaySound(audioClipSO.footstepSounds, position, volumeMultiplier * volume);
     }
     public void PlayWeaponShootSound(Vector3 position, float volumeMultiplier)
     {
-        PlaySound(audioClipSO.weaponShoot, position, volumeMultiplier * volume);
+        PlaySound(audioClipSO.weaponShootSound, position, volumeMultiplier * volume);
     }
 
     public void PlayJumpSound(Vector3 position, float volumeMultiplier)
     {
-        PlaySound(audioClipSO.jump, position, volumeMultiplier * volume);
+        PlaySound(audioClipSO.jumpSounds, position, volumeMultiplier * volume);
+    }
+    public void PlayLandSound(Vector3 position, float volumeMultiplier)
+    {
+        PlaySound(audioClipSO.weaponLandSound, position, volumeMultiplier * volume);
     }
     public void ChangeVolume()
     {

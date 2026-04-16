@@ -54,4 +54,9 @@ public class PlayerWeaponAnimations : MonoBehaviour
             animationSystem.Destroy();
         }
     }
+
+    public void PlayLandSound()
+    {
+        SoundManager.Instance.PlayLandSound(playerMovement.transform.position, 0.5f);
+    }
 }
