@@ -39,6 +39,7 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded)
         {
             playerRb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+            SoundManager.Instance.PlayJumpSound(transform.position, 0.5f);
         }
     }
 
