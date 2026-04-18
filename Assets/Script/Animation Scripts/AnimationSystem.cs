@@ -84,7 +84,8 @@ public class AnimationSystem
     }
     private void BlendIn(float duration) 
     {
-        blendInHandle = Timing.RunCoroutine(Blend(duration, blendTime => {
+        blendInHandle = Timing.RunCoroutine(Blend(duration, blendTime => 
+        {
             float weight = Mathf.Lerp(1f, 0f, blendTime);
             topLevelMixer.SetInputWeight(0, weight);
             topLevelMixer.SetInputWeight(1, 1f - weight);
@@ -93,7 +94,8 @@ public class AnimationSystem
     
     private void BlendOut(float duration, float delay) 
     {
-        blendOutHandle = Timing.RunCoroutine(Blend(duration, blendTime => {
+        blendOutHandle = Timing.RunCoroutine(Blend(duration, blendTime => 
+        {
             float weight = Mathf.Lerp(0f, 1f, blendTime);
             topLevelMixer.SetInputWeight(0, weight);
             topLevelMixer.SetInputWeight(1, 1f - weight);
@@ -101,7 +103,8 @@ public class AnimationSystem
 
         currentOneShot = OneShotType.None;
     }
-    private IEnumerator<float> Blend(float duration, Action<float> blendCallback, float delay = 0f, Action finishedCallback = null) {
+    private IEnumerator<float> Blend(float duration, Action<float> blendCallback, float delay = 0f, Action finishedCallback = null) 
+    {
         if (delay > 0f) {
             yield return Timing.WaitForSeconds(delay);
         }
@@ -117,7 +120,8 @@ public class AnimationSystem
         
         finishedCallback?.Invoke();
     }
-    private void InterruptOneShot() {
+    private void InterruptOneShot() 
+    {
         Timing.KillCoroutines(blendInHandle);
         Timing.KillCoroutines(blendOutHandle);
         
@@ -129,12 +133,17 @@ public class AnimationSystem
         }
     }
 
-    private void DisconnectOneShot() {
+    private void DisconnectOneShot() 
+    {
+
         topLevelMixer.DisconnectInput(1);
         playableGraph.DestroyPlayable(oneShotPlayable);
     }
     public void Destroy() 
     {
+        Timing.KillCoroutines(blendInHandle);
+        Timing.KillCoroutines(blendOutHandle);
+
         if (playableGraph.IsValid()) {
             playableGraph.Destroy();
         }

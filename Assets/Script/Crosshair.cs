@@ -12,14 +12,9 @@ public class Crosshair : MonoBehaviour
         crosshairStyle.normal.background = crosshairTexture;
         Vector2 pivotPoint = new Vector2(crosshairStyle.normal.background.width / 2, crosshairStyle.normal.background.height / 2);
         Vector2 position = new Vector2(Screen.width / 2 - pivotPoint.x * crosshairScale, Screen.height / 2 - pivotPoint.y * crosshairScale);
-
-        if (InteractionController.Instance.IsAimingAtHealth)
-            GUI.color = Color.red;
-        else
-            GUI.color = Color.white;
         
-        GUI.DrawTexture(new Rect(position.x, position.y, crosshairStyle.normal.background.width * crosshairScale, crosshairStyle.normal.background.height * crosshairScale), crosshairStyle.normal.background);
-        GUI.color = Color.white;
+        if (!GameInput.Instance.IsGamePaused())
+            GUI.DrawTexture(new Rect(position.x, position.y, crosshairStyle.normal.background.width * crosshairScale, crosshairStyle.normal.background.height * crosshairScale), crosshairStyle.normal.background);
         
     }
     private void Update()

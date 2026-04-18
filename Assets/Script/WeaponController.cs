@@ -23,9 +23,10 @@ public class WeaponController : MonoBehaviour
     private void FireBullet()
     {
         Transform bulletTransform = Instantiate(bulletPrefab, weaponTip.position, weaponTip.rotation);
+        Transform cameraTransform = Player.Instance.GetCameraTransform();
         Rigidbody bulletRb = bulletTransform.GetComponent<Rigidbody>();
         TrailRenderer trailRenderer = bulletTransform.GetComponent<TrailRenderer>();
-        Vector3 targetPoint = InteractionController.Instance.hitPoint;
+        Vector3 targetPoint = cameraTransform.position + cameraTransform.forward * 1000f;
         Vector3 direction = (targetPoint - weaponTip.position).normalized;
 
         float travelTime = 0.04f;
