@@ -45,7 +45,8 @@ public class PlayerMovement : MonoBehaviour
 
     public void HandleMovement()
     {
-
+        if (GameInput.Instance.IsGamePaused())  return;
+        
         Vector2 inputVector = GameInput.Instance.GetMovementVectorNormalized();
 
         Vector3 forward = Player.Instance.GetCameraTransform().forward;

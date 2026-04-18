@@ -20,11 +20,14 @@ public class InteractionController : MonoBehaviour
 
     private void GameInput_OnAttackAction(object sender, EventArgs e)
     {
+        if (GameInput.Instance.IsGamePaused())  return;
+        
         if (weaponController.IsWeaponEquipped())
         {
             Debug.Log("No weapons Equipped");
             return;    
         }
+        
         OnGunfired?.Invoke(this, EventArgs.Empty);
 
         if (health != null)

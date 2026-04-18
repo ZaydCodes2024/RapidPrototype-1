@@ -10,6 +10,9 @@ public class GameInput : MonoBehaviour
     public event EventHandler OnAttackAction;
     public event EventHandler OnJumpAction;
     private InputSystem_Actions playerInputActions;
+    public event EventHandler OnGamePauseAction;
+    public event EventHandler OnGameUnpauseAction;
+    private bool isGamePause = false;
     private bool isRunning;
     private void Awake()
     {
@@ -18,12 +21,19 @@ public class GameInput : MonoBehaviour
         playerInputActions.Enable();
         playerInputActions.Player.Attack.performed += Attack_Performed;
         playerInputActions.Player.Jump.performed += Jump_Performed;
+        playerInputActions.Player.Pause.performed += Pause_Performed;
+    }
+
+    private void Pause_Performed(InputAction.CallbackContext context)
+    {
+        TogglePauseGame();
     }
 
     private void OnDestroy()
     {
         playerInputActions.Player.Attack.performed -= Attack_Performed;
         playerInputActions.Player.Jump.performed -= Jump_Performed;
+        playerInputActions.Player.Pause.performed -= Pause_Performed;
         playerInputActions.Dispose();
     }
     private void Jump_Performed(InputAction.CallbackContext context)
@@ -67,5 +77,26 @@ public class GameInput : MonoBehaviour
     public bool IsRunning()
     {
         return isRunning;
+    }
+
+    public void TogglePauseGame()
+    {
+        isGamePause = !isGamePause;
+
+        if (isGamePause)
+        {
+            Time.timeScale = 0f;
+            OnGamePauseAction?.Invoke(this, EventArgs.Empty);
+        }
+        else
+        {
+            Time.timeScale = 1f;
+            OnGameUnpauseAction?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
+    public bool IsGamePaused()
+    {
+        return isGamePause;
     }
 }
