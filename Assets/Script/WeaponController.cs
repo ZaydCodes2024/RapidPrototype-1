@@ -6,6 +6,7 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private Transform weaponTip;
     [SerializeField] private Transform bulletPrefab;
     [SerializeField] private float bulletSpeed = 500f;
+    [SerializeField] private CameraShake cameraShake;
     private Weapon weapon;
     private float weaponDamage = 20f;
     private void Start()
@@ -16,6 +17,7 @@ public class WeaponController : MonoBehaviour
     private void InteractionController_OnGunfired(object sender, EventArgs e)
     {
         FireBullet();
+        cameraShake.ShakeCamera();
         SoundManager.Instance.PlayWeaponShootSound(transform.position, 0.5f);
     }
     private void FireBullet()
