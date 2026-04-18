@@ -18,15 +18,15 @@ public class OptionsUI : MonoBehaviour
     {
         Instance = this;
 
-        sfxSlider.onValueChanged.AddListener( (_) =>
+        sfxSlider.onValueChanged.AddListener( (value) =>
         {
-            SoundManager.Instance.ChangeVolume();
+            SoundManager.Instance.ChangeVolume(value);
             UpdateVisual();
         });
 
-        musicSlider.onValueChanged.AddListener( (_) =>
+        musicSlider.onValueChanged.AddListener( (value) =>
         {
-            MusicManager.Instance.ChangeVolume();
+            MusicManager.Instance.ChangeVolume(value);
             UpdateVisual();
         } );
 
@@ -40,6 +40,10 @@ public class OptionsUI : MonoBehaviour
     private void Start()
     {
         GameInput.Instance.OnGameUnpauseAction += GameInput_OnGameUnpauseAction;
+
+        sfxSlider.value = SoundManager.Instance.GetVolume();
+        musicSlider.value = MusicManager.Instance.GetVolume();
+
         UpdateVisual();
         Hide();
     }
@@ -51,14 +55,8 @@ public class OptionsUI : MonoBehaviour
 
     private void UpdateVisual()
     {
-        // float sfxVolume = SoundManager.Instance.GetVolume();
-        // float musicVolume = MusicManager.Instance.GetVolume();
-
-        // soundEffectsVolumeText.text = Mathf.Round(sfxVolume * 10f).ToString();
-        // musicVolumeText.text = Mathf.Round(musicVolume * 10f).ToString();
-
-        // sfxSlider.value = sfxVolume;
-        // musicSlider.value = musicVolume;
+        soundEffectsVolumeText.text = Mathf.Ceil(sfxSlider.value * 10f).ToString();
+        musicVolumeText.text = Mathf.Ceil(musicSlider.value * 10f).ToString();
     }
     public void Show(Action closeButtonAction)
     {

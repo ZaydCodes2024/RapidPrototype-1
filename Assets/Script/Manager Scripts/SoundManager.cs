@@ -36,9 +36,10 @@ public class SoundManager : MonoBehaviour
     {
         PlaySound(audioClipSO.weaponLandSound, position, volumeMultiplier * volume);
     }
-    public void ChangeVolume()
+    public void ChangeVolume(float value)
     {
-        volume += .1f;
+        volume = value;
+        
         if (volume > 1f)
             volume = 0f;
 
