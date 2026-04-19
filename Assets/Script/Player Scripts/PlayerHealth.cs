@@ -6,6 +6,7 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(float damage)
     {
         health -= damage;
+        SoundManager.Instance.PlayPlayerHurtSound(transform.position, 5f);
     }
 
     public float GetPlayerHealth()

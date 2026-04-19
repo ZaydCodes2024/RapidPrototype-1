@@ -22,6 +22,8 @@ public class Enemy : MonoBehaviour, IHealth
     public void TakeDamage(float damage)
     {
         health -= damage;
+        
+        SoundManager.Instance.PlayEnemyHurtSound(Player.Instance.GetCameraTransform().position, 2.5f);
 
         if (health <= 0)
         {
@@ -60,6 +62,7 @@ public class Enemy : MonoBehaviour, IHealth
     private void KilledByPlayer()
     {
         OnKilledByPlayer?.Invoke(this, EventArgs.Empty);
+        SoundManager.Instance.PlayEnemyDeathSound(Player.Instance.GetCameraTransform().position, 2.5f);
         Destroy(gameObject);
     }
 }

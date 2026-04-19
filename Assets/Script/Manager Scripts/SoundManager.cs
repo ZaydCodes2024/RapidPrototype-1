@@ -36,6 +36,22 @@ public class SoundManager : MonoBehaviour
     {
         PlaySound(audioClipSO.weaponLandSound, position, volumeMultiplier * volume);
     }
+    public void PlayPlayerHurtSound(Vector3 position, float volumeMultiplier)
+    {
+        PlaySound(audioClipSO.playerHurtSounds, position, volumeMultiplier * volume);
+    }
+    public void PlayEnemyHurtSound(Vector3 position, float volumeMultiplier)
+    {
+        PlaySound(audioClipSO.enemyHurtSounds, position, volumeMultiplier * volume);
+    }
+    public void PlayEnemyDeathSound(Vector3 position, float volumeMultiplier)
+    {
+        PlaySound(audioClipSO.enemyDeathSounds, position, volumeMultiplier * volume);
+    }
+    public void PlayGameOverSound(Vector3 position, float volumeMultiplier)
+    {
+        PlaySound(audioClipSO.gameOverSounds, position, volumeMultiplier * volume);
+    }
     public void ChangeVolume(float value)
     {
         volume = value;

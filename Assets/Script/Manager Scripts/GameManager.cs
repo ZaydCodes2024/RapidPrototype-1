@@ -117,6 +117,11 @@ public class GameManager : MonoBehaviour
         
     }
 
+    [ContextMenu("End Game")]
+    public void EndGame()
+    {
+        Loader.Load(Loader.Scene.GameOverScene);
+    }
     private void StartRoundNumberTimer()
     {
         if (!isRoundStarting) return;

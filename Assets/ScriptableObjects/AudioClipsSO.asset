@@ -21,5 +21,22 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c6316e91450b647a5ac7e2488f7a1b74, type: 3}
   - {fileID: 8300000, guid: dd4065c3e3049416fb8329bc5d263f27, type: 3}
   - {fileID: 8300000, guid: f5b04b443fd184abe82794000eb79773, type: 3}
+  playerHurtSounds:
+  - {fileID: 8300000, guid: 76fb74c53413b4e348a3bcc80656310e, type: 3}
+  - {fileID: 8300000, guid: ae7f64858c2b845748641a65d470ed19, type: 3}
+  - {fileID: 8300000, guid: ca9165385a6374a9ebdacf1770ef5f71, type: 3}
+  - {fileID: 8300000, guid: 237d5787ad2a343f5a968f326593fe3f, type: 3}
+  enemyHurtSounds:
+  - {fileID: 8300000, guid: 69e575d3e7a384ad697e25852f97958e, type: 3}
+  - {fileID: 8300000, guid: 1d7b8d6296db047e5a423dd7f5f19878, type: 3}
+  - {fileID: 8300000, guid: ac09b1c901afe4ff9ae02753b0a3ebad, type: 3}
+  enemyDeathSounds:
+  - {fileID: 8300000, guid: 0dbb46ad934f84723874a2d05fdac2d4, type: 3}
+  - {fileID: 8300000, guid: 37810f38fca6b4e8196d420bf802e2b5, type: 3}
+  gameOverSounds:
+  - {fileID: 8300000, guid: 28171b8570d2947878f48cf3c69c1743, type: 3}
+  - {fileID: 8300000, guid: cf5ff206e69e94f5c92d95deb27a325b, type: 3}
+  - {fileID: 8300000, guid: bddcf531c37c04abebb736ae6156a1f1, type: 3}
+  - {fileID: 8300000, guid: ebeba58fe578c4ae791efe6cb7202893, type: 3}
   weaponShootSound: {fileID: 8300000, guid: 52ed95e2c5214477ba267e6d1d5f1c6d, type: 3}
   weaponLandSound: {fileID: 8300000, guid: 9f53bb8273b2e46c38e5d84b87e6c54e, type: 3}
