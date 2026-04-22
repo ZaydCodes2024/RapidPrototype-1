@@ -40,3 +40,4 @@ MonoBehaviour:
   - {fileID: 8300000, guid: ebeba58fe578c4ae791efe6cb7202893, type: 3}
   weaponShootSound: {fileID: 8300000, guid: 52ed95e2c5214477ba267e6d1d5f1c6d, type: 3}
   weaponLandSound: {fileID: 8300000, guid: 9f53bb8273b2e46c38e5d84b87e6c54e, type: 3}
+  enemyGrowlSound: {fileID: 8300000, guid: 0039c31bee6204a5b94e42227d184e5d, type: 3}
