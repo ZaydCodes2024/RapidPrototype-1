@@ -10,9 +10,12 @@ public class OptionsUI : MonoBehaviour
     public static OptionsUI Instance {get; private set;}
     [SerializeField] private Slider sfxSlider;
     [SerializeField] private Slider musicSlider;
+    [SerializeField] private Slider mouseSensitivitySlider;
+    [SerializeField] PlayerLook playerLook;
     [SerializeField] private Button closeButton;
     [SerializeField] private TextMeshProUGUI soundEffectsVolumeText;
     [SerializeField] private TextMeshProUGUI musicVolumeText;
+    [SerializeField] private TextMeshProUGUI mouseSensitivityText;
     private Action OnCloseButtonAction;
     private void Awake()
     {
@@ -30,6 +33,12 @@ public class OptionsUI : MonoBehaviour
             UpdateVisual();
         } );
 
+        mouseSensitivitySlider.onValueChanged.AddListener( (value) =>
+        {
+            playerLook.SetMouseSensitivityValue(value);
+            UpdateVisual();
+        } );
+
         closeButton.onClick.AddListener( () =>
         {
             Hide();
@@ -43,7 +52,7 @@ public class OptionsUI : MonoBehaviour
 
         sfxSlider.value = SoundManager.Instance.GetVolume();
         musicSlider.value = MusicManager.Instance.GetVolume();
-
+        mouseSensitivitySlider.value = playerLook.GetMouseSensitivityValue();
         UpdateVisual();
         Hide();
     }
@@ -57,6 +66,7 @@ public class OptionsUI : MonoBehaviour
     {
         soundEffectsVolumeText.text = Mathf.Ceil(sfxSlider.value * 10f).ToString();
         musicVolumeText.text = Mathf.Ceil(musicSlider.value * 10f).ToString();
+        mouseSensitivityText.text = Mathf.Ceil(mouseSensitivitySlider.value * 10f).ToString();
     }
     public void Show(Action closeButtonAction)
     {

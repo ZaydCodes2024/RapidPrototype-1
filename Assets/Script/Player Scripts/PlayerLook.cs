@@ -22,4 +22,14 @@ public class PlayerLook : MonoBehaviour
         desiredRotationX = Mathf.Clamp(desiredRotationX, -90f, 90f);
         Player.Instance.GetCameraTransform().rotation = Quaternion.Euler(desiredRotationX, currentRotation.y, currentRotation.z);
     }
+
+    public float GetMouseSensitivityValue()
+    {
+        return mouseSensitivity;
+    }
+
+    public void SetMouseSensitivityValue(float value)
+    {
+        mouseSensitivity = value;
+    }
 }
