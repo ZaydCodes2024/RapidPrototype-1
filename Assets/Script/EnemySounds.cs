@@ -13,6 +13,15 @@ public class EnemySounds : MonoBehaviour
 
     private void Update()
     {
+        if (GameInput.Instance.IsGamePaused())
+        {
+            audioSource.enabled = false;
+        }
+        else
+        {
+            audioSource.enabled = true;
+        }
+
         audioSource.volume = SoundManager.Instance.GetVolume();
     }
     private void SetRandomPitch()
