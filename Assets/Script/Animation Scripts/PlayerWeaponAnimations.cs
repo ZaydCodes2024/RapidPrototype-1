@@ -9,6 +9,7 @@ public class PlayerWeaponAnimations : MonoBehaviour
     [SerializeField] private AnimationClip landClip;
     [SerializeField] private AnimationClip shootClip;
     [SerializeField] private PlayerMovement playerMovement;
+    [SerializeField] private new ParticleSystem particleSystem;
     private Animator animator;
     private AnimationSystem animationSystem;
     private bool wasGrounded;
@@ -58,5 +59,13 @@ public class PlayerWeaponAnimations : MonoBehaviour
     public void PlayLandSound()
     {
         SoundManager.Instance.PlayLandSound(playerMovement.transform.position, 0.5f);
+    }
+
+    public void PlayParticleEffect(int count)
+    {
+        if (particleSystem != null)
+        {
+            particleSystem.Emit(count);
+        }
     }
 }
