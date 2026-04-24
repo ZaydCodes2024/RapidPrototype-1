@@ -5,6 +5,10 @@ public class Enemy : MonoBehaviour, IHealth
 {
     [SerializeField] private float moveSpeed;
     [SerializeField] private float rotateSpeed;
+    [SerializeField] private ParticleSystem hurtParticles;
+    [SerializeField] private ParticleSystem deathParticles;
+    private Animator animator;
+    private const string ENEMY_FLASH = "Flash";
     private float health = 100f;
     private float maxHealth = 100f;
     private float enemyDamage = 10f;
@@ -14,7 +18,9 @@ public class Enemy : MonoBehaviour, IHealth
     private void Awake()
     {
         enemyRb = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
     }
+
     private void Update()
     {
         EnemyMovement();
@@ -24,6 +30,10 @@ public class Enemy : MonoBehaviour, IHealth
         health -= damage;
         
         SoundManager.Instance.PlayEnemyHurtSound(Player.Instance.GetCameraTransform().position, 2.5f);
+
+        Instantiate(hurtParticles, transform.position, transform.rotation);
+
+        animator.SetTrigger(ENEMY_FLASH);
 
         if (health <= 0)
         {
@@ -62,7 +72,11 @@ public class Enemy : MonoBehaviour, IHealth
     private void KilledByPlayer()
     {
         OnKilledByPlayer?.Invoke(this, EventArgs.Empty);
+
         SoundManager.Instance.PlayEnemyDeathSound(Player.Instance.GetCameraTransform().position, 2.5f);
+
+        Instantiate(deathParticles, transform.position, transform.rotation);
+
         Destroy(gameObject);
     }
 }
