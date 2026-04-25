@@ -9,7 +9,6 @@ public class GameInput : MonoBehaviour
     public static GameInput Instance {get; private set;}
     public event EventHandler OnAttackAction;
     public event EventHandler OnJumpAction;
-    public event EventHandler OnSprintAction;
     private InputSystem_Actions playerInputActions;
     public event EventHandler OnGamePauseAction;
     public event EventHandler OnGameUnpauseAction;
@@ -23,12 +22,6 @@ public class GameInput : MonoBehaviour
         playerInputActions.Player.Attack.performed += Attack_Performed;
         playerInputActions.Player.Jump.performed += Jump_Performed;
         playerInputActions.Player.Pause.performed += Pause_Performed;
-        playerInputActions.Player.Sprint.performed += Sprint_Performed;
-    }
-
-    private void Sprint_Performed(InputAction.CallbackContext context)
-    {
-       OnSprintAction?.Invoke(this, EventArgs.Empty);
     }
 
     private void Pause_Performed(InputAction.CallbackContext context)
