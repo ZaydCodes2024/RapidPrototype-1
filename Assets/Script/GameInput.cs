@@ -80,12 +80,6 @@ public class GameInput : MonoBehaviour
         
         return  movementSpeed;
     }
-
-    public bool IsRunning()
-    {
-        return isRunning;
-    }
-
     public void TogglePauseGame()
     {
         isGamePause = !isGamePause;
@@ -100,6 +94,10 @@ public class GameInput : MonoBehaviour
             Time.timeScale = 1f;
             OnGameUnpauseAction?.Invoke(this, EventArgs.Empty);
         }
+    }
+    public bool IsRunning()
+    {
+        return isRunning;
     }
 
     public bool IsGamePaused()
