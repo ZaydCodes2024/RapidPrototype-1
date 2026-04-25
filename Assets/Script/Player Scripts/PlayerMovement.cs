@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     public static PlayerMovement Instance {get; private set;}
+    [SerializeField] private Camera cameraTransform;
     [SerializeField] private float walkSpeed;
     [SerializeField] private float runSpeed;
     [SerializeField] private float jumpForce;
@@ -15,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrounded;
     private bool isMoving;
     private Rigidbody playerRb;
+
     // public event EventHandler OnCrouchDown;
     // public event EventHandler OnCrouchUp;
     // private bool isCrouching;
@@ -22,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
     // private float lerpSpeed = 10f;
     // private float crouchHeight = 0.25f;
     // private float crouchSpeed = 2.5f;
-    
+
 
     private void Awake()
     {
@@ -34,6 +36,17 @@ public class PlayerMovement : MonoBehaviour
         GameInput.Instance.OnJumpAction += GameInput_OnJumpaction;
     }
 
+    private void Update()
+    {
+        if (GameInput.Instance.IsRunning())
+        {
+            cameraTransform.fieldOfView = Mathf.Lerp(cameraTransform.fieldOfView, 60f, Time.deltaTime * 10f);
+        }
+        else
+        {
+            cameraTransform.fieldOfView = Mathf.Lerp(cameraTransform.fieldOfView, 50f, Time.deltaTime * 10f);
+        }
+    }
     private void GameInput_OnJumpaction(object sender, EventArgs e)
     {
         if (isGrounded)
