@@ -8,6 +8,7 @@ public class PlayerWeaponAnimations : MonoBehaviour
     [SerializeField] private AnimationClip jumpClip;
     [SerializeField] private AnimationClip landClip;
     [SerializeField] private AnimationClip shootClip;
+    [SerializeField] private AnimationClip adsClip;
     [SerializeField] private PlayerMovement playerMovement;
     [SerializeField] private new ParticleSystem particleSystem;
     private Animator animator;
@@ -22,6 +23,7 @@ public class PlayerWeaponAnimations : MonoBehaviour
         animationSystem = new AnimationSystem(animator, locomotionAnimationClips);
         GameInput.Instance.OnAttackAction += PlayShootAnimation;
     }
+
 
     private void PlayShootAnimation(object sender, EventArgs e)
     {
