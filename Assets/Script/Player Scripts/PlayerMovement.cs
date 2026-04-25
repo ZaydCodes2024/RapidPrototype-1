@@ -15,6 +15,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float gravityScale = 1.5f;
     private bool isGrounded;
     private bool isMoving;
+    private float fovSpeed = 10f;
+    private float originalCameraFov = 50f;
     private Rigidbody playerRb;
 
     // public event EventHandler OnCrouchDown;
@@ -40,11 +42,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if (GameInput.Instance.IsRunning())
         {
-            cameraTransform.fieldOfView = Mathf.Lerp(cameraTransform.fieldOfView, 60f, Time.deltaTime * 10f);
+            cameraTransform.fieldOfView = Mathf.Lerp(cameraTransform.fieldOfView, originalCameraFov + 10f, Time.deltaTime * fovSpeed);
         }
         else
         {
-            cameraTransform.fieldOfView = Mathf.Lerp(cameraTransform.fieldOfView, 50f, Time.deltaTime * 10f);
+            cameraTransform.fieldOfView = Mathf.Lerp(cameraTransform.fieldOfView, originalCameraFov, Time.deltaTime * fovSpeed);
         }
     }
     private void GameInput_OnJumpaction(object sender, EventArgs e)
