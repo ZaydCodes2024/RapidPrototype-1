@@ -15,6 +15,12 @@ public class Enemy : MonoBehaviour, IHealth
     private Rigidbody enemyRb;
     public static event EventHandler OnKilledByPlayer;
     public static event EventHandler OnDestroyed;
+
+    public static void ResetStaticData()
+    {
+        OnKilledByPlayer = null;
+        OnDestroyed = null;
+    }
     private void Awake()
     {
         enemyRb = GetComponent<Rigidbody>();
