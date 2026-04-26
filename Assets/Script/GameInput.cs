@@ -9,13 +9,11 @@ public class GameInput : MonoBehaviour
     public static GameInput Instance {get; private set;}
     public event EventHandler OnAttackAction;
     public event EventHandler OnJumpAction;
-    public event EventHandler OnAimAction;
     public event EventHandler OnGamePauseAction;
     public event EventHandler OnGameUnpauseAction;
     private InputSystem_Actions playerInputActions;
     private bool isGamePause;
     private bool isRunning;
-    private bool isAiming;
     private void Awake()
     {
         Instance = this;
@@ -24,14 +22,7 @@ public class GameInput : MonoBehaviour
         playerInputActions.Player.Attack.performed += Attack_Performed;
         playerInputActions.Player.Jump.performed += Jump_Performed;
         playerInputActions.Player.Pause.performed += Pause_Performed;
-        playerInputActions.Player.ADS.performed += ADS_Performed;
     }
-
-    private void ADS_Performed(InputAction.CallbackContext context)
-    {
-        OnAimAction?.Invoke(this, EventArgs.Empty);
-    }
-
     private void Pause_Performed(InputAction.CallbackContext context)
     {
         TogglePauseGame();
@@ -104,10 +95,5 @@ public class GameInput : MonoBehaviour
     public bool IsGamePaused()
     {
         return isGamePause;
-    }
-    public bool IsAiming()
-    {
-        isAiming = playerInputActions.Player.ADS.IsPressed();
-        return isAiming;
     }
 }
