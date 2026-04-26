@@ -25,7 +25,7 @@ public class PlayerWeaponAnimations : MonoBehaviour
 
     private void PlayShootAnimation(object sender, EventArgs e)
     {
-        animationSystem.PlayOneShot(shootClip, AnimationSystem.OneShotType.Shoot);
+        animationSystem.PlayOneShot(shootClip);
     }
 
     private void Update()
@@ -36,13 +36,13 @@ public class PlayerWeaponAnimations : MonoBehaviour
         // Jump (left ground)
         if (wasGrounded && !isGrounded)
         {
-            animationSystem.PlayOneShot(jumpClip, AnimationSystem.OneShotType.Jump);
+            animationSystem.PlayOneShot(jumpClip);
         }
 
         // Land (hit ground)
         if (!wasGrounded && isGrounded)
         {
-            animationSystem.PlayOneShot(landClip, AnimationSystem.OneShotType.Land);
+            animationSystem.PlayOneShot(landClip);
         }
 
         wasGrounded = isGrounded;

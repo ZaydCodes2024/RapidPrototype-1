@@ -13,11 +13,6 @@ public class AnimationSystem
     private AnimationClipPlayable oneShotPlayable;
     CoroutineHandle blendInHandle;
     CoroutineHandle blendOutHandle;
-    public enum OneShotType
-    {
-        None, Jump, Land, Shoot
-    }
-    private OneShotType currentOneShot;
     public AnimationSystem(Animator animator, List<AnimationClip> animationClip) 
     {
         playableGraph = PlayableGraph.Create("AnimationSystem");
@@ -62,13 +57,9 @@ public class AnimationSystem
        locomotionMixer.SetInputWeight(0, 1f - weight);
        locomotionMixer.SetInputWeight(1, weight);
     }
-    public void PlayOneShot(AnimationClip oneShotClip, OneShotType type) 
+    public void PlayOneShot(AnimationClip oneShotClip) 
     {
-        if (currentOneShot == OneShotType.Shoot && type != OneShotType.Shoot)
-        return;
-
         InterruptOneShot();
-        currentOneShot = type;
 
         oneShotPlayable = AnimationClipPlayable.Create(playableGraph, oneShotClip);
 
@@ -100,8 +91,6 @@ public class AnimationSystem
             topLevelMixer.SetInputWeight(0, weight);
             topLevelMixer.SetInputWeight(1, 1f - weight);
         }, delay, DisconnectOneShot));
-
-        currentOneShot = OneShotType.None;
     }
     private IEnumerator<float> Blend(float duration, Action<float> blendCallback, float delay = 0f, Action finishedCallback = null) 
     {

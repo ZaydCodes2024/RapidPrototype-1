@@ -40,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (GameInput.Instance.IsRunning())
+        if (GameInput.Instance.IsRunning() && IsMoving())
         {
             cameraTransform.fieldOfView = Mathf.Lerp(cameraTransform.fieldOfView, originalCameraFov + 5f, Time.deltaTime * fovSpeed);
         }
