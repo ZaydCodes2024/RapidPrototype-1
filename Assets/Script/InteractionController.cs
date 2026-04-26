@@ -6,7 +6,9 @@ public class InteractionController : MonoBehaviour
     [SerializeField] private WeaponController weaponController;
     public static InteractionController Instance {get; private set;}
     public event EventHandler OnGunfired;
+    public event EventHandler OnEnemyDamage;
     private IHealth health;
+    private bool isAimingAtEnemy;
     private void Awake()
     {
         Instance = this;
@@ -31,6 +33,7 @@ public class InteractionController : MonoBehaviour
         if (health != null)
         {
             health.TakeDamage(weaponController.GetWeaponDamage());
+            OnEnemyDamage?.Invoke(this, EventArgs.Empty);
         }
     }
     
@@ -40,15 +43,23 @@ public class InteractionController : MonoBehaviour
         if (hit.transform.TryGetComponent(out IHealth healthObj))
         {
             health = healthObj;
+            isAimingAtEnemy = true;
         }
         else
         {
             ClearInteractions(Player.Instance.GetCameraTransform());
+            isAimingAtEnemy = false;
         }
     }
 
     public void ClearInteractions(Transform cameraTransform)
     {
         health = null;
+        isAimingAtEnemy = false;
+    }
+
+    public bool IsAimingAtEnemy()
+    {
+        return isAimingAtEnemy;
     }
 }
