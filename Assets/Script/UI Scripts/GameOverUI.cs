@@ -23,6 +23,6 @@ public class GameOverUI : MonoBehaviour
             Loader.Load(Loader.Scene.MainMenuScene);
         });
 
-        enemyKillCountText.text = "Enemies Killed: " + GameManager.Instance.GetEnemyKilledCount().ToString();
+        enemyKillCountText.text = GameManager.Instance.GetEnemyKilledCount().ToString();
     }
 }
