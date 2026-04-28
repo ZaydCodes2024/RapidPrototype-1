@@ -2890,6 +2890,7 @@ GameObject:
   m_Component:
   - component: {fileID: 825963593}
   - component: {fileID: 825963594}
+  - component: {fileID: 825963595}
   m_Layer: 5
   m_Name: PlayerUI
   m_TagString: Untagged
@@ -2935,10 +2936,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerUI
   healthText: {fileID: 1513746291}
   enemiesKilledText: {fileID: 1268364645}
+--- !u!114 &825963595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 825963592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bf9c397ea1d3437692a34148a338eff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHUDAnimations
   enemyKillCounterAnimator: {fileID: 558073025}
   playerHealthAnimator: {fileID: 932167035}
   playerVolumeAnimator: {fileID: 1556343281}
-  playerHealth: {fileID: 11766537}
 --- !u!1 &842883468
 GameObject:
   m_ObjectHideFlags: 0

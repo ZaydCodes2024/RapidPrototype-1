@@ -3,9 +3,14 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
+    public static PlayerHealth Instance {get; private set;}
     [SerializeField] private CameraShake cameraShake;
     private float health = 100f;
     public event EventHandler OnDamageTaken;
+    private void Awake()
+    {
+        Instance = this;
+    }
     public void TakeDamage(float damage)
     {
         health -= damage;
