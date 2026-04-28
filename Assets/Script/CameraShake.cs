@@ -15,7 +15,7 @@ public class CameraShake : MonoBehaviour
 
     private void Update()
     {
-        if (currentDuration > 0)
+        if (currentDuration > 0 && !GameInput.Instance.IsGamePaused())
         {
             Vector3 randomOffset = Random.insideUnitCircle * shakeMagnitude;
             transform.localPosition = initialPosition + randomOffset * shakeIntensity;

@@ -59,7 +59,7 @@ public class GameInput : MonoBehaviour
     {
         float movementSpeed;
 
-        if (playerInputActions.Player.Sprint.IsPressed())
+        if (playerInputActions.Player.Sprint.IsPressed() && PlayerStamina.Instance.GetStaminaValue() > 0f && !PlayerStamina.Instance.IsSprintLocked())
         {
             movementSpeed = PlayerMovement.Instance.GetRunSpeed();
             isRunning = true;
