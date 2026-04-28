@@ -10,7 +10,7 @@ public class PlayerHealth : MonoBehaviour
     {
         health -= damage;
         OnDamageTaken?.Invoke(this, EventArgs.Empty);
-        SoundManager.Instance.PlayPlayerHurtSound(transform.position, 10f);
+        SoundManager.Instance.PlayPlayerHurtSound(Player.Instance.GetCameraTransform().position, 20f);
         cameraShake.ShakeCamera();
     }
 

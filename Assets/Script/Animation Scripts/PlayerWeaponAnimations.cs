@@ -25,6 +25,8 @@ public class PlayerWeaponAnimations : MonoBehaviour
 
     private void PlayShootAnimation(object sender, EventArgs e)
     {
+        if (GameInput.Instance.IsGamePaused())  return;
+
         animationSystem.PlayOneShot(shootClip);
     }
 

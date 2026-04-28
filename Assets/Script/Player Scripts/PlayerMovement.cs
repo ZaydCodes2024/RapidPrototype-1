@@ -51,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void GameInput_OnJumpaction(object sender, EventArgs e)
     {
-        if (isGrounded)
+        if (isGrounded && !GameInput.Instance.IsGamePaused())
         {
             playerRb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
             SoundManager.Instance.PlayJumpSound(transform.position, 0.5f);

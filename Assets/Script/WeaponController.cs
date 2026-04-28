@@ -16,6 +16,8 @@ public class WeaponController : MonoBehaviour
 
     private void InteractionController_OnGunfired(object sender, EventArgs e)
     {
+        if (GameInput.Instance.IsGamePaused())  return;
+        
         FireBullet();
         cameraShake.ShakeCamera();
         SoundManager.Instance.PlayWeaponShootSound(transform.position, 0.5f);
