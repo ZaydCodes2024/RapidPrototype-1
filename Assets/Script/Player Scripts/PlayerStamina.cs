@@ -80,13 +80,7 @@ public class PlayerStamina : MonoBehaviour
             sprintLocked = false;
         }
     }
-    public float GetStaminaValue()
-    {
-        return stamina;
-    }
+    public float GetStaminaValue() => stamina;
 
-    public bool IsSprintLocked()
-    {
-        return sprintLocked;
-    }
+    public bool IsSprintLocked() => sprintLocked;
 }

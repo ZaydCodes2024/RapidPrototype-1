@@ -13,10 +13,7 @@ public class PlayerWeaponAnimations : MonoBehaviour
     private Animator animator;
     private AnimationSystem animationSystem;
     private bool wasGrounded;
-    private void Awake()
-    {
-        animator = GetComponent<Animator>();
-    }
+    private void Awake() => animator = GetComponent<Animator>();
     private void Start()
     {
         animationSystem = new AnimationSystem(animator, locomotionAnimationClips);
@@ -58,10 +55,7 @@ public class PlayerWeaponAnimations : MonoBehaviour
         }
     }
 
-    public void PlayLandSound()
-    {
-        SoundManager.Instance.PlayLandSound(playerMovement.transform.position, 0.5f);
-    }
+    public void PlayLandSound() => SoundManager.Instance.PlayLandSound(playerMovement.transform.position, 0.5f);
 
     public void PlayParticleEffect(int count)
     {

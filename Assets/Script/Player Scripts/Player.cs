@@ -6,10 +6,7 @@ public class Player : MonoBehaviour
     private PlayerMovement playerMovement;
     private PlayerLook playerLook;
     public static Player Instance {get; private set;}
-    private void Awake()
-    {
-        Instance = this;
-    }
+    private void Awake() => Instance = this;
 
     private void Start()
     {
@@ -22,10 +19,7 @@ public class Player : MonoBehaviour
         playerLook.HandleMouseLook();
         playerMovement.HandleMovement();
     }
-    public Transform GetCameraTransform()
-    {
-        return cameraTransform;
-    }
+    public Transform GetCameraTransform() => cameraTransform;
     public void LockCursorState()
     {
         Cursor.lockState = CursorLockMode.Locked;

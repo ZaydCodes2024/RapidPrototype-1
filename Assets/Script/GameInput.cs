@@ -8,6 +8,7 @@ public class GameInput : MonoBehaviour
 {
     public static GameInput Instance {get; private set;}
     public event EventHandler OnAttackAction;
+    public event EventHandler OnReloadAction;
     public event EventHandler OnJumpAction;
     public event EventHandler OnGamePauseAction;
     public event EventHandler OnGameUnpauseAction;
@@ -22,28 +23,24 @@ public class GameInput : MonoBehaviour
         playerInputActions.Player.Attack.performed += Attack_Performed;
         playerInputActions.Player.Jump.performed += Jump_Performed;
         playerInputActions.Player.Pause.performed += Pause_Performed;
+        playerInputActions.Player.Reload.performed += Reload_Performed;
     }
-    private void Pause_Performed(InputAction.CallbackContext context)
-    {
-        TogglePauseGame();
-    }
+
+    private void Reload_Performed(InputAction.CallbackContext context) => OnReloadAction?.Invoke(this, EventArgs.Empty);
+
+    private void Pause_Performed(InputAction.CallbackContext context) => TogglePauseGame();
 
     private void OnDestroy()
     {
         playerInputActions.Player.Attack.performed -= Attack_Performed;
         playerInputActions.Player.Jump.performed -= Jump_Performed;
         playerInputActions.Player.Pause.performed -= Pause_Performed;
+        playerInputActions.Player.Reload.performed -= Reload_Performed;
         playerInputActions.Dispose();
     }
-    private void Jump_Performed(InputAction.CallbackContext context)
-    {
-        OnJumpAction?.Invoke(this, EventArgs.Empty);
-    }
+    private void Jump_Performed(InputAction.CallbackContext context) => OnJumpAction?.Invoke(this, EventArgs.Empty);
 
-    private void Attack_Performed(InputAction.CallbackContext context)
-    {
-        OnAttackAction?.Invoke(this, EventArgs.Empty);
-    }
+    private void Attack_Performed(InputAction.CallbackContext context) => OnAttackAction?.Invoke(this, EventArgs.Empty);
 
     public Vector2 GetMovementVectorNormalized()
     {
@@ -87,13 +84,7 @@ public class GameInput : MonoBehaviour
             OnGameUnpauseAction?.Invoke(this, EventArgs.Empty);
         }
     }
-    public bool IsRunning()
-    {
-        return isRunning;
-    }
+    public bool IsRunning() => isRunning;
 
-    public bool IsGamePaused()
-    {
-        return isGamePause;
-    }
+    public bool IsGamePaused() => isGamePause;
 }

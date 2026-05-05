@@ -57,10 +57,7 @@ public class OptionsUI : MonoBehaviour
         Hide();
     }
 
-    private void GameInput_OnGameUnpauseAction(object sender, EventArgs e)
-    {
-        Hide();
-    }
+    private void GameInput_OnGameUnpauseAction(object sender, EventArgs e) => Hide();
 
     private void UpdateVisual()
     {
@@ -73,8 +70,5 @@ public class OptionsUI : MonoBehaviour
         this.OnCloseButtonAction = closeButtonAction;
         gameObject.SetActive(true);
     }
-    public void Hide()
-    {
-        gameObject.SetActive(false);
-    }
+    public void Hide() => gameObject.SetActive(false);
 }

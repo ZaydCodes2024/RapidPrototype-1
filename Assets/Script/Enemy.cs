@@ -27,10 +27,7 @@ public class Enemy : MonoBehaviour, IHealth
         animator = GetComponent<Animator>();
     }
 
-    private void Update()
-    {
-        EnemyMovement();
-    }
+    private void Update() => EnemyMovement();
     public void TakeDamage(float damage)
     {
         health -= damage;

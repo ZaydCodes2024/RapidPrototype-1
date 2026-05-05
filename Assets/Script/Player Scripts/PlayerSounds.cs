@@ -7,10 +7,7 @@ public class PlayerSounds : MonoBehaviour
     private PlayerMovement playerMovement;
     private float footstepTimer;
     private float footstepTimerMax;
-    private void Awake()
-    {
-        playerMovement = GetComponent<PlayerMovement>();
-    }
+    private void Awake() => playerMovement = GetComponent<PlayerMovement>();
 
     private void Update()
     {

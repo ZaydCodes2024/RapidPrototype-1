@@ -7,16 +7,10 @@ public class InteractionController : MonoBehaviour
     public static InteractionController Instance {get; private set;}
     public event EventHandler OnGunfired;
     public event EventHandler OnEnemyDamage;
-    private IHealth health;
+    private Enemy enemyHealth;
     private bool isAimingAtEnemy;
-    private void Awake()
-    {
-        Instance = this;
-    }
-    private void Start()
-    {
-        GameInput.Instance.OnAttackAction += GameInput_OnAttackAction;
-    }
+    private void Awake() => Instance = this;
+    private void Start() => GameInput.Instance.OnAttackAction += GameInput_OnAttackAction;
 
     private void GameInput_OnAttackAction(object sender, EventArgs e)
     {
@@ -30,9 +24,9 @@ public class InteractionController : MonoBehaviour
         
         OnGunfired?.Invoke(this, EventArgs.Empty);
 
-        if (health != null)
+        if (enemyHealth != null)
         {
-            health.TakeDamage(weaponController.GetWeaponDamage());
+            enemyHealth.TakeDamage(weaponController.GetWeaponDamage());
             OnEnemyDamage?.Invoke(this, EventArgs.Empty);
         }
     }
@@ -40,9 +34,9 @@ public class InteractionController : MonoBehaviour
     public void HandleInteractions(RaycastHit hit)
     {
 
-        if (hit.transform.TryGetComponent(out IHealth healthObj))
+        if (hit.transform.TryGetComponent(out Enemy enemy))
         {
-            health = healthObj;
+            enemyHealth = enemy;
             isAimingAtEnemy = true;
         }
         else
@@ -54,12 +48,9 @@ public class InteractionController : MonoBehaviour
 
     public void ClearInteractions(Transform cameraTransform)
     {
-        health = null;
+        enemyHealth = null;
         isAimingAtEnemy = false;
     }
 
-    public bool IsAimingAtEnemy()
-    {
-        return isAimingAtEnemy;
-    }
+    public bool IsAimingAtEnemy() => isAimingAtEnemy;
 }

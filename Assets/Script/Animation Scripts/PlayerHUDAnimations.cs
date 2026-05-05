@@ -15,10 +15,7 @@ public class PlayerHUDAnimations : MonoBehaviour
         PlayerHealth.Instance.OnDamageTaken += playerHealth_OnDamageTaken;
     }
 
-    private void Enemy_OnKilledByPlayer(object sender, EventArgs e)
-    {
-        enemyKillCounterAnimator.SetTrigger(ENEMY_KILLED);
-    }
+    private void Enemy_OnKilledByPlayer(object sender, EventArgs e) => enemyKillCounterAnimator.SetTrigger(ENEMY_KILLED);
 
     private void playerHealth_OnDamageTaken(object sender, EventArgs e)
     {

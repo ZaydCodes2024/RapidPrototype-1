@@ -73,25 +73,19 @@ public class AnimationSystem
         BlendIn(blendDuration);
         BlendOut(blendDuration, oneShotClip.length - blendDuration);
     }
-    private void BlendIn(float duration) 
-    {
-        blendInHandle = Timing.RunCoroutine(Blend(duration, blendTime => 
-        {
-            float weight = Mathf.Lerp(1f, 0f, blendTime);
-            topLevelMixer.SetInputWeight(0, weight);
-            topLevelMixer.SetInputWeight(1, 1f - weight);
-        }));
-    }
-    
-    private void BlendOut(float duration, float delay) 
-    {
-        blendOutHandle = Timing.RunCoroutine(Blend(duration, blendTime => 
-        {
-            float weight = Mathf.Lerp(0f, 1f, blendTime);
-            topLevelMixer.SetInputWeight(0, weight);
-            topLevelMixer.SetInputWeight(1, 1f - weight);
-        }, delay, DisconnectOneShot));
-    }
+    private void BlendIn(float duration) => blendInHandle = Timing.RunCoroutine(Blend(duration, blendTime =>
+                                                 {
+                                                     float weight = Mathf.Lerp(1f, 0f, blendTime);
+                                                     topLevelMixer.SetInputWeight(0, weight);
+                                                     topLevelMixer.SetInputWeight(1, 1f - weight);
+                                                 }));
+
+    private void BlendOut(float duration, float delay) => blendOutHandle = Timing.RunCoroutine(Blend(duration, blendTime =>
+                                                               {
+                                                                   float weight = Mathf.Lerp(0f, 1f, blendTime);
+                                                                   topLevelMixer.SetInputWeight(0, weight);
+                                                                   topLevelMixer.SetInputWeight(1, 1f - weight);
+                                                               }, delay, DisconnectOneShot));
     private IEnumerator<float> Blend(float duration, Action<float> blendCallback, float delay = 0f, Action finishedCallback = null) 
     {
         if (delay > 0f) {

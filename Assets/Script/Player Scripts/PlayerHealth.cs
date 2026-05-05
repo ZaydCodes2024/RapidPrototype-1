@@ -7,10 +7,7 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private CameraShake cameraShake;
     private float health = 100f;
     public event EventHandler OnDamageTaken;
-    private void Awake()
-    {
-        Instance = this;
-    }
+    private void Awake() => Instance = this;
     public void TakeDamage(float damage)
     {
         health -= damage;
@@ -19,8 +16,5 @@ public class PlayerHealth : MonoBehaviour
         cameraShake.ShakeCamera();
     }
 
-    public float GetPlayerHealth()
-    {
-        return health;
-    }
+    public float GetPlayerHealth() => health;
 }

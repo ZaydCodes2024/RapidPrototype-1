@@ -11,12 +11,7 @@ public class CrosshairUI : MonoBehaviour
         crosshair = GetComponent<Image>();
         defaultColor = crosshair.color;
     }
-
-    // Update is called once per frame
-    private void Update()
-    {
-        UpdateVisual();
-    }
+    private void Update() => UpdateVisual();
 
     private void UpdateVisual()
     {

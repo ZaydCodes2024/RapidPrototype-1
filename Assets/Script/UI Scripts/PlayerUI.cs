@@ -6,10 +6,7 @@ public class PlayerUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI healthText;
     [SerializeField] private TextMeshProUGUI enemiesKilledText;
-    private void Update()
-    {
-        UpdateVisual();
-    }
+    private void Update() => UpdateVisual();
 
     private void UpdateVisual()
     {

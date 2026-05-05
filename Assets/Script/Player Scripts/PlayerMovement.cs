@@ -33,10 +33,7 @@ public class PlayerMovement : MonoBehaviour
         playerRb = GetComponent<Rigidbody>();
         Instance = this;
     }
-    private void Start()
-    {
-        GameInput.Instance.OnJumpAction += GameInput_OnJumpaction;
-    }
+    private void Start() => GameInput.Instance.OnJumpAction += GameInput_OnJumpaction;
 
     private void Update()
     {
@@ -136,22 +133,10 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    public float GetWalkSpeed()
-    {
-        return walkSpeed;
-    }
+    public float GetWalkSpeed() => walkSpeed;
 
-    public float GetRunSpeed()
-    {
-        return runSpeed;
-    }
+    public float GetRunSpeed() => runSpeed;
 
-    public bool IsGrounded()
-    {
-        return isGrounded;
-    }
-    public bool IsMoving()
-    {
-        return isMoving;
-    }
+    public bool IsGrounded() => isGrounded;
+    public bool IsMoving() => isMoving;
 }

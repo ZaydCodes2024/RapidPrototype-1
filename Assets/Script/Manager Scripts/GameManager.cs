@@ -44,10 +44,7 @@ public class GameManager : MonoBehaviour
         Enemy.OnDestroyed += Enemy_OnDestroyed;
     }
 
-    private void Enemy_OnDestroyed(object sender, System.EventArgs e)
-    {
-        enemiesAlive--;
-    }
+    private void Enemy_OnDestroyed(object sender, System.EventArgs e) => enemiesAlive--;
 
     private void Enemy_OnKilledByPlayer(object sender, System.EventArgs e)
     {
@@ -118,10 +115,7 @@ public class GameManager : MonoBehaviour
     }
 
     [ContextMenu("End Game")]
-    public void EndGame()
-    {
-        Loader.Load(Loader.Scene.GameOverScene);
-    }
+    public void EndGame() => Loader.Load(Loader.Scene.GameOverScene);
     private void StartRoundNumberTimer()
     {
         if (!isRoundStarting) return;
@@ -187,8 +181,5 @@ public class GameManager : MonoBehaviour
         Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
     }
 
-    public int GetEnemyKilledCount()
-    {
-        return enemyCount;
-    }
+    public int GetEnemyKilledCount() => enemyCount;
 }

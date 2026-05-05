@@ -4,10 +4,7 @@ public class Crosshair : MonoBehaviour
 {
     [SerializeField] private Camera playerCamera;
     private RaycastHit hit;
-    private void Update()
-    {
-        PerformRayCast();
-    }
+    private void Update() => PerformRayCast();
 
     private void PerformRayCast()
     {

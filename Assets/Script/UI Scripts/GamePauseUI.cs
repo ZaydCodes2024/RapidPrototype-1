@@ -47,12 +47,6 @@ public class GamePauseUI : MonoBehaviour
         Show();
     }
 
-    private void Show()
-    {
-        gameObject.SetActive(true);
-    }
-    private void Hide()
-    {
-        gameObject.SetActive(false);
-    }
+    private void Show() => gameObject.SetActive(true);
+    private void Hide() => gameObject.SetActive(false);
 }

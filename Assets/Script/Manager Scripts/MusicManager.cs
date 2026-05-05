@@ -29,8 +29,5 @@ public class MusicManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    public float GetVolume()
-    {
-        return volume;
-    }
+    public float GetVolume() => volume;
 }

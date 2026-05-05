@@ -23,13 +23,7 @@ public class PlayerLook : MonoBehaviour
         Player.Instance.GetCameraTransform().rotation = Quaternion.Euler(desiredRotationX, currentRotation.y, currentRotation.z);
     }
 
-    public float GetMouseSensitivityValue()
-    {
-        return mouseSensitivity;
-    }
+    public float GetMouseSensitivityValue() => mouseSensitivity;
 
-    public void SetMouseSensitivityValue(float value)
-    {
-        mouseSensitivity = value;
-    }
+    public void SetMouseSensitivityValue(float value) => mouseSensitivity = value;
 }

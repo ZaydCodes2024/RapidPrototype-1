@@ -8,10 +8,7 @@ public class CameraShake : MonoBehaviour
    private float currentDuration;
    private Vector3 initialPosition;
 
-    private void Awake()
-    {
-        initialPosition = transform.localPosition;
-    }
+    private void Awake() => initialPosition = transform.localPosition;
 
     private void Update()
     {
@@ -28,8 +25,5 @@ public class CameraShake : MonoBehaviour
         }
     }
 
-    public void ShakeCamera()
-    {
-        currentDuration = shakeDuration;
-    }
+    public void ShakeCamera() => currentDuration = shakeDuration;
 }
