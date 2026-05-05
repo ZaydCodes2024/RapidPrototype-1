@@ -14,12 +14,6 @@ public class WeaponController : MonoBehaviour
     private void Start()
     {
         InteractionController.Instance.OnGunfired += InteractionController_OnGunfired;
-        GameInput.Instance.OnReloadAction += GameInput_OnReloadAction;
-    }
-
-    private void GameInput_OnReloadAction(object sender, EventArgs e)
-    {
-        Debug.Log("Reloading");
     }
 
     private void InteractionController_OnGunfired(object sender, EventArgs e)
@@ -34,8 +28,11 @@ public class WeaponController : MonoBehaviour
     {
         Transform bulletTransform = Instantiate(bulletPrefab, weaponTip.position, weaponTip.rotation);
         Transform cameraTransform = Player.Instance.GetCameraTransform();
+
         Rigidbody bulletRb = bulletTransform.GetComponent<Rigidbody>();
+
         TrailRenderer trailRenderer = bulletTransform.GetComponent<TrailRenderer>();
+
         Vector3 targetPoint = cameraTransform.position + cameraTransform.forward * 1000f;
         Vector3 direction = (targetPoint - weaponTip.position).normalized;
 

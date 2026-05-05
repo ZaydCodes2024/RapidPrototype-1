@@ -617,8 +617,10 @@ MonoBehaviour:
   bulletPrefab: {fileID: 349771510496782575, guid: 8b5f25f32508549129681f1033acb627, type: 3}
   bulletSpeed: 500
   cameraShake: {fileID: 963194230}
+  fireRate: 0.2
   magazineSize: 10
-  totalAmmo: 10
+  maxAmmo: 20
+  reloadTime: 1.5
 --- !u!95 &77030329
 Animator:
   serializedVersion: 7
