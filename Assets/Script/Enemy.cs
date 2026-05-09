@@ -27,6 +27,7 @@ public class Enemy : MonoBehaviour, IHealth
     }
 
     private void Update() => EnemyMovement();
+
     public void TakeDamage(float damage)
     {
         health -= damage;
@@ -49,8 +50,9 @@ public class Enemy : MonoBehaviour, IHealth
 
         if (collision.gameObject.TryGetComponent(out PlayerHealth playerHealth))
         {
-            playerHealth.TakeDamage(enemyDamage);
+            playerHealth.TakeDamage(enemyDamage, transform.position);
             Destroy(gameObject);
+
             OnDestroyed?.Invoke(this, EventArgs.Empty);
         }
     } 
@@ -81,4 +83,6 @@ public class Enemy : MonoBehaviour, IHealth
 
         Destroy(gameObject);
     }
+
+    
 }
