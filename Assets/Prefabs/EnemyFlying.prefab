@@ -250,7 +250,7 @@ GameObject:
   - component: {fileID: -8484282994696573503}
   - component: {fileID: 5219273468722533766}
   - component: {fileID: 2086595884183747174}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EnemyFlying
   m_TagString: Untagged
   m_Icon: {fileID: 0}
