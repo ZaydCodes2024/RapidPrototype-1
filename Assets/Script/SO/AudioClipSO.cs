@@ -11,5 +11,6 @@ public class AudioClipSO : ScriptableObject
     public AudioClip[] gameOverSounds;
     public AudioClip weaponShootSound;
     public AudioClip weaponLandSound;
+    public AudioClip roundNumberTextSound;
    
 }
