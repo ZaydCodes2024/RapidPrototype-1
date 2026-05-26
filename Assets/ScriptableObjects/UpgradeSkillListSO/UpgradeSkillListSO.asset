@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89b61311e7d884c309d9b7ea7bb23dc6, type: 3}
+  m_Name: UpgradeSkillListSO
+  m_EditorClassIdentifier: Assembly-CSharp::UpgradeSkillListSO
+  upgradeSkillListSO:
+  - {fileID: 11400000, guid: cb9eb692bfce44451a5dcf3275acffa8, type: 2}
+  - {fileID: 11400000, guid: ef9d73584fbae4aad81c14918940c5ef, type: 2}
+  - {fileID: 11400000, guid: 049a681e5419b43f796cc3aa62460dcc, type: 2}
+  - {fileID: 11400000, guid: 71d2a868932544aa8956e161559c9daa, type: 2}
