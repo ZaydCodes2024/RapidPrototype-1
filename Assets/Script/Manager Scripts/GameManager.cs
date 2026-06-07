@@ -189,6 +189,8 @@ public class GameManager : MonoBehaviour
         enemiesToSpawn = enemiesPerRound + (currentRound - 1) * 2; // difficulty scaling
         enemiesAlive = 0;
     }
+    
+    [ContextMenu("End Round")]
     private void EndRound()
     {
         isRoundActive = false;
