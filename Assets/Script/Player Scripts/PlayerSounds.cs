@@ -19,7 +19,7 @@ public class PlayerSounds : MonoBehaviour
         {
             footstepTimer = footstepTimerMax;
 
-            if (playerMovement.IsMoving() && playerMovement.IsGrounded())
+            if (playerMovement.IsMoving() && playerMovement.IsGrounded() && !GameManager.Instance.IsPlayerUpgrading())
             {
                 SoundManager.Instance.PlayFootstepSound(transform.position, 0.5f);
             }    

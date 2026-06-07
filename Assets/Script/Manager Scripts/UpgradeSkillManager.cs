@@ -7,21 +7,31 @@ public class UpgradeSkillManager : MonoBehaviour
     [SerializeField] private UpgradeSkillListSO upgradeSkillListSO;
     private List<UpgradeSkillSO> upgradeSkillSOList;
     private int upgradeSkillMax = 3;
-    private int index;
     private void Awake()
     {
         Instance = this;
         upgradeSkillSOList = new List<UpgradeSkillSO>();
-        SetUpgradeSkillList(index);
+        SetUpgradeSkillList();
     }
-    
-    private void SetUpgradeSkillList(int index)
+
+    private void Start()
     {
-        while (index < upgradeSkillMax)
+        GameManager.Instance.OnUpgradeSelected += GameManager_OnUpgradeSelected;
+    }
+
+    private void GameManager_OnUpgradeSelected(object sender, System.EventArgs e)
+    {
+        SetUpgradeSkillList();
+    }
+
+    private void SetUpgradeSkillList()
+    {
+        upgradeSkillSOList.Clear();
+        
+        for (int i = 0; i < upgradeSkillMax; i++)
         {
             UpgradeSkillSO upgradeSkillSO = upgradeSkillListSO.upgradeSkillListSO[Random.Range(0, upgradeSkillListSO.upgradeSkillListSO.Count)];
             upgradeSkillSOList.Add(upgradeSkillSO);
-            index++;
         }
         
     }

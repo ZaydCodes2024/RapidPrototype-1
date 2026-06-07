@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -38,16 +39,21 @@ public class UpgradeSkillUI : MonoBehaviour
             skillTemplate.gameObject.SetActive(true);
             UpgradeSkillSingleUI upgradeUI = skillTemplate.GetComponent<UpgradeSkillSingleUI>();
             upgradeUI.SetUpgradeSkillSO(upgradeSkillSO);
-            upgradeUI.onSelectButtonPressed += OnSkillSelected;
+            upgradeUI.OnSelectButtonPressed += OnSkillSelected;
         }
     }
-    private void OnSkillSelected(UpgradeSkillSO skill)
+
+    private void OnSkillSelected(UpgradeSkillSO upgradeSkill)
     {
         // Apply upgrade here
         // UpgradeSkillManager.Instance.ApplyUpgrade(skill);
-        Debug.Log("Upgrade Selected");
+        Debug.Log("Upgrade Selected: " + upgradeSkill.title);
 
-        gameObject.SetActive(false);
+        foreach (Transform child in skillContainer)
+        {
+            if (child == template) continue;
+            Destroy(child.gameObject);
+        }
 
         GameManager.Instance.UpgradeChosen();
     }

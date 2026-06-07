@@ -127,7 +127,7 @@ public class GameManager : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        
+
         isUpgrading = false;
 
         OnUpgradeSelected?.Invoke(this, EventArgs.Empty);
