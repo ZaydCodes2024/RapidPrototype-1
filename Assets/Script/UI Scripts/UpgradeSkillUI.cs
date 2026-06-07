@@ -18,6 +18,7 @@ public class UpgradeSkillUI : MonoBehaviour
     private void GameManager_OnUpgradePhaseStarted(object sender, EventArgs e)
     {
         Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         UpdateVisual();
     }
 

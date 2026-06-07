@@ -25,6 +25,8 @@ public class PlayerStamina : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Instance.IsPlayerUpgrading())   return;
+        
         stamina = Mathf.Clamp(stamina, 0, staminaMax);
 
         UpdateStamina();

@@ -37,7 +37,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (GameInput.Instance.IsRunning() && IsMoving())
+        if (GameInput.Instance.IsRunning() && IsMoving() && GameManager.Instance.IsPlayerUpgrading())
         {
             cameraTransform.fieldOfView = Mathf.Lerp(cameraTransform.fieldOfView, originalCameraFov + 5f, Time.deltaTime * fovSpeed);
         }
@@ -48,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void GameInput_OnJumpaction(object sender, EventArgs e)
     {
-        if (isGrounded && !GameInput.Instance.IsGamePaused())
+        if (isGrounded && !GameInput.Instance.IsGamePaused() && !GameManager.Instance.IsPlayerUpgrading())
         {
             playerRb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
             SoundManager.Instance.PlayJumpSound(transform.position, 0.5f);
@@ -57,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void HandleMovement()
     {
-        if (GameInput.Instance.IsGamePaused())  return;
+        if (GameInput.Instance.IsGamePaused() || GameManager.Instance.IsPlayerUpgrading())  return;
         
         Vector2 inputVector = GameInput.Instance.GetMovementVectorNormalized();
 

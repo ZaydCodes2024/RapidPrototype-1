@@ -37,7 +37,7 @@ public class GamePauseUI : MonoBehaviour
 
     private void GameInput_OnGameUnpauseAction(object sender, EventArgs e)
     {
-        Player.Instance.LockCursorState();
+        if (!GameManager.Instance.IsPlayerUpgrading())  Player.Instance.LockCursorState();
         Hide();
     }
 

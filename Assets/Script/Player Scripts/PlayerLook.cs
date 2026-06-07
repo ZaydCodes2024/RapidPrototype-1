@@ -8,7 +8,7 @@ public class PlayerLook : MonoBehaviour
     [SerializeField] private float mouseSensitivity;
     public void HandleMouseLook()
     {
-        if (GameInput.Instance.IsGamePaused())  return;
+        if (GameInput.Instance.IsGamePaused() || GameManager.Instance.IsPlayerUpgrading())  return;
         
         float mouseX = Mouse.current.delta.ReadValue().x * mouseSensitivity;
         float mouseY = Mouse.current.delta.ReadValue().y  * mouseSensitivity;

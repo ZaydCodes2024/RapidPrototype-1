@@ -22,7 +22,7 @@ public class PlayerWeaponAnimations : MonoBehaviour
 
     private void PlayShootAnimation(object sender, EventArgs e)
     {
-        if (GameInput.Instance.IsGamePaused())  return;
+        if (GameInput.Instance.IsGamePaused() || GameManager.Instance.IsPlayerUpgrading())  return;
 
         animationSystem.PlayOneShot(shootClip);
     }

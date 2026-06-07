@@ -18,7 +18,7 @@ public class WeaponController : MonoBehaviour
 
     private void InteractionController_OnGunfired(object sender, EventArgs e)
     {
-        if (GameInput.Instance.IsGamePaused())  return;
+        if (GameInput.Instance.IsGamePaused() || GameManager.Instance.IsPlayerUpgrading())  return;
         
         FireBullet();
         cameraShake.ShakeCamera();
