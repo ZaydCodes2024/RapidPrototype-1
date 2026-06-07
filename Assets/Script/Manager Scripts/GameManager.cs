@@ -1,9 +1,12 @@
 using UnityEngine;
 using TMPro;
+using System;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance {get; private set;}
+    public event EventHandler OnUpgradePhaseStarted;
+    public event EventHandler OnUpgradeSelected;
     [SerializeField] private Transform enemyPrefab;
     [SerializeField] private PlayerHealth playerHealth;
     [SerializeField] private float minSpawnDistance;
@@ -20,6 +23,7 @@ public class GameManager : MonoBehaviour
     private float roundTimer;
     private bool isRoundActive;
     private bool isRoundStarting;
+    private bool isUpgrading;
     private float waitingToStartTimer = 3f;
     private float countdownStartTimer = 2f;
     private float spawnTimer;
@@ -42,6 +46,11 @@ public class GameManager : MonoBehaviour
     {
         Enemy.OnKilledByPlayer += Enemy_OnKilledByPlayer;
         Enemy.OnDestroyed += Enemy_OnDestroyed;
+    }
+
+    private void UpgradeSkillSingleUI_onSelectButtonPressed(object sender, System.EventArgs e)
+    {
+        isUpgrading = false;
     }
 
     private void Enemy_OnDestroyed(object sender, System.EventArgs e) => enemiesAlive--;
@@ -85,7 +94,7 @@ public class GameManager : MonoBehaviour
 
                 HandleSpawning();
 
-                if (!isRoundActive && !isRoundStarting)
+                if (!isRoundActive && !isRoundStarting && !isUpgrading)
                 {
                     roundTimer -= Time.deltaTime;
 
@@ -114,11 +123,22 @@ public class GameManager : MonoBehaviour
         
     }
 
+    public void UpgradeChosen()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        isUpgrading = false;
+
+        OnUpgradeSelected?.Invoke(this, EventArgs.Empty);
+
+        currentRound++;
+        StartRound();
+    }
+
     [ContextMenu("End Game")]
     public void EndGame() => Loader.Load(Loader.Scene.GameOverScene);
     private void StartRoundNumberTimer()
     {
-        if (!isRoundStarting) return;
+        if (!isRoundStarting && IsPlayerUpgrading()) return;
 
         roundNumberTextTimer -= Time.deltaTime;
 
@@ -132,7 +152,7 @@ public class GameManager : MonoBehaviour
     }
     private void HandleSpawning()
     {
-        if (!isRoundActive) return;
+        if (!isRoundActive && IsPlayerUpgrading()) return;
 
         if (enemiesToSpawn > 0)
         {
@@ -151,9 +171,15 @@ public class GameManager : MonoBehaviour
     }
     private void StartRound()
     {
+        if (IsPlayerUpgrading())
+        {
+            isUpgrading = false;
+            return;
+        }
+
         isRoundStarting = true;
         isRoundActive = false;
-
+        
         roundNumberText.gameObject.SetActive(true);
         roundNumberText.text = "Round " + currentRound;
         roundNumberTextTimer = roundNumberTextTimerMax;
@@ -165,21 +191,24 @@ public class GameManager : MonoBehaviour
     {
         isRoundActive = false;
         roundTimer = timeBetweenRounds;
+        isUpgrading = true;
+        OnUpgradePhaseStarted?.Invoke(this, EventArgs.Empty);
     }
     private void SpawnEnemy()
     {
         if (enemyPrefab == null || Player.Instance == null)     return;
 
         Vector3 playerPosition = Player.Instance.transform.position;
-        Vector2 randomCircle = Random.insideUnitCircle.normalized;
+        Vector2 randomCircle = UnityEngine.Random.insideUnitCircle.normalized;
 
-        float randomDistance = Random.Range(minSpawnDistance, maxSpawnDistance);
+        float randomDistance = UnityEngine.Random.Range(minSpawnDistance, maxSpawnDistance);
 
         Vector3 spawnPosition = playerPosition + new Vector3(randomCircle.x, 0 , randomCircle.y) * randomDistance;
-        spawnPosition.y = playerPosition.y + Random.Range(minSpawnHeight, maxSpawnHeight);
+        spawnPosition.y = playerPosition.y + UnityEngine.Random.Range(minSpawnHeight, maxSpawnHeight);
         
         Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
     }
 
     public int GetEnemyKilledCount() => enemyCount;
+    public bool IsPlayerUpgrading() => isUpgrading;
 }

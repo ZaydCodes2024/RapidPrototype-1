@@ -1667,6 +1667,7 @@ MonoBehaviour:
   titleText: {fileID: 2114305156}
   description: {fileID: 2116707479}
   iconImage: {fileID: 851402362}
+  selectButton: {fileID: 1488428376}
 --- !u!1 &323063471
 GameObject:
   m_ObjectHideFlags: 0
@@ -5313,11 +5314,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeSkillManager
   upgradeSkillListSO: {fileID: 11400000, guid: 5fadc39f50a124098acd19cccd7f4776, type: 2}
-  upgradeSkillSOList:
-  - {fileID: 11400000, guid: cb9eb692bfce44451a5dcf3275acffa8, type: 2}
-  - {fileID: 11400000, guid: ef9d73584fbae4aad81c14918940c5ef, type: 2}
-  - {fileID: 11400000, guid: 049a681e5419b43f796cc3aa62460dcc, type: 2}
-  - {fileID: 11400000, guid: 71d2a868932544aa8956e161559c9daa, type: 2}
 --- !u!4 &953212348
 Transform:
   m_ObjectHideFlags: 0
