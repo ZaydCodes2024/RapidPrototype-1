@@ -15,4 +15,4 @@ MonoBehaviour:
   upgradeRarity: 0
   icon: {fileID: 21300000, guid: ac934d9e8ad66492fba5cda2165eb0aa, type: 3}
   title: Health Skill
-  description: This is an Health Skill. Testing this skill.
+  description: This is a Health Skill. Testing this skill.

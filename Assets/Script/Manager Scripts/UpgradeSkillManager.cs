@@ -27,13 +27,18 @@ public class UpgradeSkillManager : MonoBehaviour
     private void SetUpgradeSkillList()
     {
         upgradeSkillSOList.Clear();
-        
-        for (int i = 0; i < upgradeSkillMax; i++)
+
+        List<UpgradeSkillSO> availableSkills =
+            new List<UpgradeSkillSO>(upgradeSkillListSO.upgradeSkillListSO);
+
+        for (int i = 0; i < upgradeSkillMax && availableSkills.Count > 0; i++)
         {
-            UpgradeSkillSO upgradeSkillSO = upgradeSkillListSO.upgradeSkillListSO[Random.Range(0, upgradeSkillListSO.upgradeSkillListSO.Count)];
-            upgradeSkillSOList.Add(upgradeSkillSO);
+            int randomIndex = Random.Range(0, availableSkills.Count);
+
+            upgradeSkillSOList.Add(availableSkills[randomIndex]);
+
+            availableSkills.RemoveAt(randomIndex);
         }
-        
     }
     public List<UpgradeSkillSO> GetUpgradeSkillList()
     {

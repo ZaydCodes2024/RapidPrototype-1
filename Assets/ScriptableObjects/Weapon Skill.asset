@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeSkillSO
   upgradeRarity: 1
   icon: {fileID: 21300000, guid: a9998770d707e4f829301ecd209a632d, type: 3}
-  title: Upgrade Skill 3
-  description: This is an Upgrade Skill 3. Testing this skill.
+  title: Weapon Skill
+  description: This is an Weapon Skill. Testing this skill.
