@@ -125,8 +125,7 @@ public class GameManager : MonoBehaviour
 
     public void UpgradeChosen()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        Player.Instance.LockCursorState();
 
         isUpgrading = false;
 
@@ -214,5 +213,6 @@ public class GameManager : MonoBehaviour
     }
 
     public int GetEnemyKilledCount() => enemyCount;
+    public int GetRoundsCompleted() => currentRound - 1;
     public bool IsPlayerUpgrading() => isUpgrading;
 }

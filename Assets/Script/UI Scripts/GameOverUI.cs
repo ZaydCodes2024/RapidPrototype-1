@@ -7,6 +7,7 @@ public class GameOverUI : MonoBehaviour
     [SerializeField] private Button playAgainButton;
     [SerializeField] private Button mainMenuButton;
     [SerializeField] private TextMeshProUGUI enemyKillCountText;
+    [SerializeField] private TextMeshProUGUI roundsCompletedText;
 
     private void Awake()
     {
@@ -24,5 +25,6 @@ public class GameOverUI : MonoBehaviour
         });
 
         enemyKillCountText.text = GameManager.Instance.GetEnemyKilledCount().ToString();
+        roundsCompletedText.text = GameManager.Instance.GetRoundsCompleted().ToString();
     }
 }

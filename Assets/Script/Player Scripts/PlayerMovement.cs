@@ -33,10 +33,13 @@ public class PlayerMovement : MonoBehaviour
     {
         playerRb = GetComponent<Rigidbody>();
         Instance = this;
+    }
+    private void Start()
+    {
+        GameInput.Instance.OnJumpAction += GameInput_OnJumpaction;
         walkSpeed = PlayerStats.Instance.MoveSpeed;
         runSpeed = walkSpeed * runSpeedMultiplier;
     }
-    private void Start() => GameInput.Instance.OnJumpAction += GameInput_OnJumpaction;
 
     private void Update()
     {
