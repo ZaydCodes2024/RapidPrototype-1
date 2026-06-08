@@ -8,11 +8,12 @@ public class PlayerMovement : MonoBehaviour
 {
     public static PlayerMovement Instance {get; private set;}
     [SerializeField] private Camera cameraTransform;
-    [SerializeField] private float walkSpeed;
-    [SerializeField] private float runSpeed;
     [SerializeField] private float jumpForce;
     [SerializeField] private LayerMask groundLayerMask;
     [SerializeField] private float gravityScale = 1.5f;
+    private float walkSpeed;
+    private float runSpeed;
+    private float runSpeedMultiplier = 2f;
     private bool isGrounded;
     private bool isMoving;
     private float fovSpeed = 10f;
@@ -32,6 +33,8 @@ public class PlayerMovement : MonoBehaviour
     {
         playerRb = GetComponent<Rigidbody>();
         Instance = this;
+        walkSpeed = PlayerStats.Instance.MoveSpeed;
+        runSpeed = walkSpeed * runSpeedMultiplier;
     }
     private void Start() => GameInput.Instance.OnJumpAction += GameInput_OnJumpaction;
 

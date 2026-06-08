@@ -9,11 +9,24 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private float bulletSpeed = 500f;
     [SerializeField] private CameraShake cameraShake;
     private Weapon weapon;
-    private float weaponDamage = 20f;
-    
+    private float currentWeaponDamage;
+    private float maxWeaponDamage;
+    private void Awake()
+    {
+        maxWeaponDamage = PlayerStats.Instance.Damage;
+        currentWeaponDamage = maxWeaponDamage;
+    }
     private void Start()
     {
         InteractionController.Instance.OnGunfired += InteractionController_OnGunfired;
+        PlayerStats.Instance.OnStatsChanged += PlayerStats_OnStatsChanged;
+    }
+
+    private void PlayerStats_OnStatsChanged(object sender, EventArgs e)
+    {
+        maxWeaponDamage = PlayerStats.Instance.Damage;
+        currentWeaponDamage = maxWeaponDamage;
+        Debug.Log($"Damage upgraded: Max = {maxWeaponDamage}, Current = {currentWeaponDamage}");
     }
 
     private void InteractionController_OnGunfired(object sender, EventArgs e)
@@ -51,6 +64,6 @@ public class WeaponController : MonoBehaviour
         
     }
     public bool IsWeaponEquipped() => weapon == null;
-    public float GetWeaponDamage() => weaponDamage;
+    public float GetWeaponDamage() => currentWeaponDamage;
     public void SetWeapon(Weapon weapon) => this.weapon = weapon;
 }

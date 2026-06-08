@@ -15,4 +15,5 @@ public class UpgradeSkillSO : ScriptableObject
     public Sprite icon;
     public string title;
     public string description;
+    public StatModifier modifier;
 }

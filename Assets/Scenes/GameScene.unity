@@ -128,6 +128,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 11766527}
+  - component: {fileID: 11766539}
   - component: {fileID: 11766528}
   - component: {fileID: 11766537}
   - component: {fileID: 11766530}
@@ -189,8 +190,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   cameraTransform: {fileID: 963194227}
-  walkSpeed: 4
-  runSpeed: 10
   jumpForce: 7
   groundLayerMask:
     serializedVersion: 2
@@ -368,6 +367,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 551b1b413182741fa9e07acaebb592fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSounds
+--- !u!114 &11766539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 11766526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33a3f70b5b5fd4240be5d9fc68cf0543, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
+  damage: 20
+  maxHealth: 100
+  moveSpeed: 5
 --- !u!1 &23328802
 GameObject:
   m_ObjectHideFlags: 0

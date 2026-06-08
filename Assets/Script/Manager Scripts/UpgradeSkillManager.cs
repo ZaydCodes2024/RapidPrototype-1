@@ -40,6 +40,10 @@ public class UpgradeSkillManager : MonoBehaviour
             availableSkills.RemoveAt(randomIndex);
         }
     }
+    public void ApplyUpgrade(UpgradeSkillSO selectedSkill)
+    {
+        PlayerStats.Instance.ApplyModifier(selectedSkill.modifier);
+    }
     public List<UpgradeSkillSO> GetUpgradeSkillList()
     {
         return upgradeSkillSOList;

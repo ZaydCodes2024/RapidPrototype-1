@@ -46,7 +46,8 @@ public class UpgradeSkillUI : MonoBehaviour
     private void OnSkillSelected(UpgradeSkillSO upgradeSkill)
     {
         // Apply upgrade here
-        // UpgradeSkillManager.Instance.ApplyUpgrade(skill);
+        UpgradeSkillManager.Instance.ApplyUpgrade(upgradeSkill);
+        
         Debug.Log("Upgrade Selected: " + upgradeSkill.title);
 
         foreach (Transform child in skillContainer)

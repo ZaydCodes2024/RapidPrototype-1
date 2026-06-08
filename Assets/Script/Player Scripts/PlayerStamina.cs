@@ -1,3 +1,4 @@
+using System;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,11 +7,11 @@ public class PlayerStamina : MonoBehaviour
 {
     public static PlayerStamina Instance {get; private set;}
     private Image staminaBar;
-    private float stamina;
+    private float currentStamina;
     private float staminaDecay = 15f;
     private float staminaRegen = 15f;
     private float staminaSpeed= 4f;
-    private float staminaMax = 100f;
+    private float staminaMax;
     private float regenTimer;
     private float regenDelay = 2f;
     private bool canSprint;
@@ -19,15 +20,25 @@ public class PlayerStamina : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        stamina = staminaMax;
+
+        PlayerStats.Instance.OnStatsChanged += PlayerStats_OnStatsChanged;
+        staminaMax = PlayerStats.Instance.MaxStamina;
+        currentStamina = staminaMax;
         staminaBar = GetComponent<Image>();
+    }
+
+    private void PlayerStats_OnStatsChanged(object sender, EventArgs e)
+    {
+        staminaMax = PlayerStats.Instance.MaxStamina;
+        currentStamina = Mathf.Min(currentStamina, staminaMax);
+        Debug.Log($"Stamina upgraded: Max = {staminaMax}, Current = {currentStamina}");
     }
 
     private void Update()
     {
         if (GameManager.Instance.IsPlayerUpgrading())   return;
         
-        stamina = Mathf.Clamp(stamina, 0, staminaMax);
+        currentStamina = Mathf.Clamp(currentStamina, 0, staminaMax);
 
         UpdateStamina();
 
@@ -36,7 +47,7 @@ public class PlayerStamina : MonoBehaviour
 
     private void UpdateStaminaBar()
     {
-        float sFraction = stamina/staminaMax;
+        float sFraction = currentStamina/staminaMax;
 
         staminaBar.fillAmount = Mathf.Lerp(staminaBar.fillAmount, sFraction, staminaSpeed * Time.deltaTime);
     }
@@ -47,17 +58,17 @@ public class PlayerStamina : MonoBehaviour
 
         if (canSprint && !sprintLocked)
         {
-            stamina -= staminaDecay * Time.deltaTime;
+            currentStamina -= staminaDecay * Time.deltaTime;
 
-            if (stamina <= 0)
+            if (currentStamina <= 0)
             {
-                stamina = 0f;
+                currentStamina = 0f;
                 sprintLocked = true;
             }
         }
         else
         {
-            if (stamina < staminaMax)
+            if (currentStamina < staminaMax)
             {
                 regenTimer += Time.deltaTime;
                 if (regenTimer >= regenDelay)
@@ -68,21 +79,21 @@ public class PlayerStamina : MonoBehaviour
 
     private void RegenerateStamina()
     {
-        stamina += staminaRegen * Time.deltaTime;
+        currentStamina += staminaRegen * Time.deltaTime;
 
-        if (stamina >= staminaMax)
+        if (currentStamina >= staminaMax)
         {
-            stamina = staminaMax;
+            currentStamina = staminaMax;
             sprintLocked = false;
             regenTimer = 0f;
         }
 
-        if (stamina >= staminaMax * 0.3f) // 30% threshold
+        if (currentStamina >= staminaMax * 0.3f) // 30% threshold
         {
             sprintLocked = false;
         }
     }
-    public float GetStaminaValue() => stamina;
+    public float GetStaminaValue() => currentStamina;
 
     public bool IsSprintLocked() => sprintLocked;
 }

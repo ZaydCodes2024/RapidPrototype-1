@@ -7,11 +7,28 @@ public class PlayerHealth : MonoBehaviour
     public event EventHandler OnDamageTaken;
     [SerializeField] private CameraShake cameraShake;
     [SerializeField] private DamageIndicatorUI damageIndicator;
-    private float health = 100f;
+    private float currentHealth;
+    private float maxHealth;
     private void Awake() => Instance = this;
+    private void Start()
+    {
+        PlayerStats.Instance.OnStatsChanged += PlayerStats_OnStatsChanged;
+        maxHealth = PlayerStats.Instance.MaxHealth;
+        currentHealth = maxHealth;
+    }
+
+    private void PlayerStats_OnStatsChanged(object sender, EventArgs e)
+    {
+        float newMaxHealth = PlayerStats.Instance.MaxHealth;
+        float healthPercent = Mathf.CeilToInt(currentHealth / maxHealth);
+
+        maxHealth = newMaxHealth;
+        currentHealth = maxHealth * healthPercent;
+    }
+
     public void TakeDamage(float damage, Vector3 damagePosition)
     {
-        health -= damage;
+        currentHealth -= damage;
         
         GameObject indicatorObject = Instantiate(damageIndicator.gameObject, damageIndicator.transform.position, damageIndicator.transform.rotation, damageIndicator.transform.parent);
 
@@ -27,6 +44,5 @@ public class PlayerHealth : MonoBehaviour
 
         cameraShake.ShakeCamera();
     }
-
-    public float GetPlayerHealth() => health;
+    public float GetPlayerHealth() => currentHealth;
 }
