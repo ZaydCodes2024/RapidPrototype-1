@@ -22,8 +22,10 @@ public class WeaponController : MonoBehaviour
         PlayerStats.Instance.OnStatsChanged += PlayerStats_OnStatsChanged;
     }
 
-    private void PlayerStats_OnStatsChanged(object sender, EventArgs e)
+    private void PlayerStats_OnStatsChanged(StatType type)
     {
+        if (type != StatType.Damage)    return;
+
         maxWeaponDamage = PlayerStats.Instance.Damage;
         currentWeaponDamage = maxWeaponDamage;
         Debug.Log($"Damage upgraded: Max = {maxWeaponDamage}, Current = {currentWeaponDamage}");

@@ -17,8 +17,10 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = maxHealth;
     }
 
-    private void PlayerStats_OnStatsChanged(object sender, EventArgs e)
+    private void PlayerStats_OnStatsChanged(StatType type)
     {
+        if (type != StatType.MaxHealth)    return;
+
         float newMaxHealth = PlayerStats.Instance.MaxHealth;
         float healthPercent = Mathf.CeilToInt(currentHealth / maxHealth);
 

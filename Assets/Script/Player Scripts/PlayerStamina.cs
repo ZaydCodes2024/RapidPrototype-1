@@ -27,8 +27,10 @@ public class PlayerStamina : MonoBehaviour
         staminaBar = GetComponent<Image>();
     }
 
-    private void PlayerStats_OnStatsChanged(object sender, EventArgs e)
+    private void PlayerStats_OnStatsChanged(StatType type)
     {
+        if (type != StatType.MaxStamina)    return;
+        
         staminaMax = PlayerStats.Instance.MaxStamina;
         currentStamina = Mathf.Min(currentStamina, staminaMax);
         Debug.Log($"Stamina upgraded: Max = {staminaMax}, Current = {currentStamina}");

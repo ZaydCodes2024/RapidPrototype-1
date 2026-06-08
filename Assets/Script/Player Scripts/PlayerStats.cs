@@ -3,7 +3,7 @@ using System;
 public class PlayerStats : MonoBehaviour
 {
     public static PlayerStats Instance { get; private set; }
-    public event EventHandler OnStatsChanged;
+    public event Action<StatType> OnStatsChanged;
     [SerializeField] private float damage = 20f;
     [SerializeField] private float maxHealth = 100f;
     [SerializeField] private float maxStamina = 100f;
@@ -43,6 +43,6 @@ public class PlayerStats : MonoBehaviour
                 break;
         }
 
-        OnStatsChanged?.Invoke(this, EventArgs.Empty);
+        OnStatsChanged?.Invoke(modifier.statType);
     }
 }
