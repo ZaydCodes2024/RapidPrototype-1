@@ -336,7 +336,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7727259e0844c4094b69f25320055045, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
-  moveSpeed: 4
   rotateSpeed: 4
   hurtParticles: {fileID: 3592302048177406086, guid: 5ee23a9ea799c47df97fa3aa50fbe0b5, type: 3}
   deathParticles: {fileID: 3592302048177406086, guid: 7bdf783a532f34d4ba4333162d1bdd18, type: 3}

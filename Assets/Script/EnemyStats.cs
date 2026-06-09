@@ -1,12 +1,10 @@
 using UnityEngine;
 using System;
-public class PlayerStats : MonoBehaviour
+public class EnemyStats : MonoBehaviour
 {
-    public static PlayerStats Instance { get; private set; }
-    public event Action<StatType> OnStatsChanged;
-    [SerializeField] private float damage = 20f;
+    public static EnemyStats Instance { get; private set; }
+    [SerializeField] private float damage = 10f;
     [SerializeField] private float maxHealth = 100f;
-    [SerializeField] private float maxStamina = 100f;
     [SerializeField] private float moveSpeed = 5f;
     private void Awake()
     {
@@ -15,7 +13,6 @@ public class PlayerStats : MonoBehaviour
     public float Damage => damage;
     public float MaxHealth => maxHealth;
     public float MoveSpeed => moveSpeed;
-    public float MaxStamina => maxStamina;
 
     private float ApplyValue(float currentValue, UpgradeEffect upgradeEffect)
     {
@@ -39,10 +36,8 @@ public class PlayerStats : MonoBehaviour
                 break;
 
             case StatType.MaxStamina:
-                maxStamina = ApplyValue(maxStamina, upgradeEffect);
+                moveSpeed = ApplyValue(moveSpeed, upgradeEffect);
                 break;
         }
-
-        OnStatsChanged?.Invoke(upgradeEffect.statType);
     }
 }

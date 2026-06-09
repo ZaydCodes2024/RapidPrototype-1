@@ -3,15 +3,17 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour, IHealth
 {
-    [SerializeField] private float moveSpeed;
     [SerializeField] private float rotateSpeed;
     [SerializeField] private ParticleSystem hurtParticles;
     [SerializeField] private ParticleSystem deathParticles;
     private Animator animator;
     private const string ENEMY_FLASH = "Flash";
-    private float health = 100f;
-    private float maxHealth = 100f;
-    private float enemyDamage = 10f;
+    private float currentHealth;
+    private float maxHealth;
+    private float currentMoveSpeed;
+    private float maxMoveSpeed;
+    private float currentDamage;
+    private float maxDamage;
     private Rigidbody enemyRb;
     public static event EventHandler OnKilledByPlayer;
     public static event EventHandler OnDestroyed;
@@ -26,11 +28,25 @@ public class Enemy : MonoBehaviour, IHealth
         animator = GetComponent<Animator>();
     }
 
+    private void Start()
+    { 
+        maxHealth = EnemyStats.Instance.MaxHealth;
+        currentHealth = maxHealth;
+
+        maxMoveSpeed = EnemyStats.Instance.MoveSpeed;
+        currentMoveSpeed = maxMoveSpeed;
+
+        maxDamage = EnemyStats.Instance.Damage;
+        currentDamage = maxDamage;
+
+        Debug.Log($"Stats: {maxHealth}, {maxDamage}, {maxMoveSpeed}");
+    }
+
     private void Update() => EnemyMovement();
 
     public void TakeDamage(float damage)
     {
-        health -= damage;
+        currentHealth -= damage;
         
         SoundManager.Instance.PlayEnemyHurtSound(Player.Instance.GetCameraTransform().position, 2.5f);
 
@@ -38,9 +54,9 @@ public class Enemy : MonoBehaviour, IHealth
 
         animator.SetTrigger(ENEMY_FLASH);
 
-        if (health <= 0)
+        if (currentHealth <= 0)
         {
-            health = maxHealth;
+            currentHealth = maxHealth;
             KilledByPlayer();
         }
     }
@@ -50,7 +66,7 @@ public class Enemy : MonoBehaviour, IHealth
 
         if (collision.gameObject.TryGetComponent(out PlayerHealth playerHealth))
         {
-            playerHealth.TakeDamage(enemyDamage, transform.position);
+            playerHealth.TakeDamage(currentDamage, transform.position);
             Destroy(gameObject);
 
             OnDestroyed?.Invoke(this, EventArgs.Empty);
@@ -69,7 +85,7 @@ public class Enemy : MonoBehaviour, IHealth
                 enemyRb.MoveRotation(Quaternion.Lerp(enemyRb.rotation, targetRotation, rotateSpeed * Time.deltaTime));
             }
 
-            Vector3 nextPosition = enemyRb.position + transform.forward * moveSpeed * Time.deltaTime;
+            Vector3 nextPosition = enemyRb.position + transform.forward * currentMoveSpeed * Time.deltaTime;
             enemyRb.MovePosition(nextPosition);
         }
     }
@@ -83,6 +99,5 @@ public class Enemy : MonoBehaviour, IHealth
 
         Destroy(gameObject);
     }
-
     
 }

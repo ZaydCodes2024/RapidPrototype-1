@@ -28,7 +28,6 @@ public class WeaponController : MonoBehaviour
 
         maxWeaponDamage = PlayerStats.Instance.Damage;
         currentWeaponDamage = maxWeaponDamage;
-        Debug.Log($"Damage upgraded: Max = {maxWeaponDamage}, Current = {currentWeaponDamage}");
     }
 
     private void InteractionController_OnGunfired(object sender, EventArgs e)

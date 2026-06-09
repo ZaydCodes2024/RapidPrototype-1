@@ -17,6 +17,6 @@ MonoBehaviour:
   title: Stamina Skill
   description: Increase stamina +10
   modifier:
-    statType: 3
+    statType: 2
     amount: 10
     isPercent: 0

@@ -33,7 +33,6 @@ public class PlayerStamina : MonoBehaviour
         
         staminaMax = PlayerStats.Instance.MaxStamina;
         currentStamina = Mathf.Min(currentStamina, staminaMax);
-        Debug.Log($"Stamina upgraded: Max = {staminaMax}, Current = {currentStamina}");
     }
 
     private void Update()

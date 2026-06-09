@@ -42,8 +42,31 @@ public class UpgradeSkillManager : MonoBehaviour
     }
     public void ApplyUpgrade(UpgradeSkillSO selectedSkill)
     {
-        PlayerStats.Instance.ApplyModifier(selectedSkill.modifier);
+        foreach (var effect in selectedSkill.effects)
+        {
+            ApplyEffect(effect);
+        }
     }
+
+    private void ApplyEffect(UpgradeEffect upgradeEffect)
+    {
+        switch (upgradeEffect.target)
+        {
+            case UpgradeTarget.Player:
+                PlayerStats.Instance.ApplyModifier(upgradeEffect);
+                break;
+
+            case UpgradeTarget.Enemy:
+                EnemyStats.Instance.ApplyModifier(upgradeEffect);
+                break;
+
+            case UpgradeTarget.Both:
+                PlayerStats.Instance.ApplyModifier(upgradeEffect);
+                EnemyStats.Instance.ApplyModifier(upgradeEffect);
+                break;
+        }
+    }
+    
     public List<UpgradeSkillSO> GetUpgradeSkillList()
     {
         return upgradeSkillSOList;

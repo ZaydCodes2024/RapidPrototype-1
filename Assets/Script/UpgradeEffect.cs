@@ -1,9 +1,10 @@
 using System;
 
 [Serializable]
-public struct StatModifier
+public struct UpgradeEffect
 {
     public StatType statType;
     public float amount;
     public bool isPercent;
+    public UpgradeTarget target;
 }

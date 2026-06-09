@@ -11,9 +11,11 @@ public class UpgradeSkillSO : ScriptableObject
     [Header("Upgrade Rarity")]
     public UpgradeRarity upgradeRarity;
 
+    [Header("Upgrade Effects")]
+    public UpgradeEffect[] effects;
+
     [Header("UI")]
     public Sprite icon;
     public string title;
     public string description;
-    public StatModifier modifier;
 }
