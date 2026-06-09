@@ -24,4 +24,4 @@ MonoBehaviour:
     target: 1
   icon: {fileID: 21300000, guid: f2c4b707d378e4dabb057f04e8e97f3d, type: 3}
   title: Stamina Skill
-  description: Increase stamina +10
+  description: Increase stamina (+10).

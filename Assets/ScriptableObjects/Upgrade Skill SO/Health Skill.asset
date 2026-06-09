@@ -20,4 +20,4 @@ MonoBehaviour:
     target: 2
   icon: {fileID: 21300000, guid: 47121ad8f93b24969b921670e4eeb38a, type: 3}
   title: Health Skill
-  description: Increase max health +20 and heal current health.
+  description: Increase max health (+20) and heal.
