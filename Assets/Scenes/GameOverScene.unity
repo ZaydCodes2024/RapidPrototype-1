@@ -1545,7 +1545,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Rounds Completed
+  m_text: Rounds Survived
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f140bd8affb3e44e7a1313d45f3e6496, type: 2}
   m_sharedMaterial: {fileID: -718065914273994961, guid: f140bd8affb3e44e7a1313d45f3e6496, type: 2}

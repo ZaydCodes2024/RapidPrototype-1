@@ -47,11 +47,6 @@ public class GameManager : MonoBehaviour
         Enemy.OnDestroyed += Enemy_OnDestroyed;
     }
 
-    private void UpgradeSkillSingleUI_onSelectButtonPressed(object sender, System.EventArgs e)
-    {
-        isUpgrading = false;
-    }
-
     private void Update()
     {
         if (playerHealth.GetPlayerHealth() <= 0)
