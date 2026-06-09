@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using System;
+using UnityEditor;
 
 public class GameManager : MonoBehaviour
 {
@@ -21,9 +22,6 @@ public class GameManager : MonoBehaviour
     private int enemiesAlive;
     private int enemiesToSpawn;
     private float roundTimer;
-    private bool isRoundActive;
-    private bool isRoundStarting;
-    private bool isUpgrading;
     private float waitingToStartTimer = 3f;
     private float countdownStartTimer = 2f;
     private float spawnTimer;
@@ -31,9 +29,10 @@ public class GameManager : MonoBehaviour
     private float roundNumberTextTimer = 2f;
     private float roundNumberTextTimerMax = 2f;
     private int enemyCount;
+    private bool isUpgrading;
     private enum State
     {
-        WaitingToStart, GamePlaying, GameOver
+        WaitingToStart, GamePlaying, GameOver, RoundStarting, RoundEndDelay, UpgradePhase
     }
     private State state;
     private void Awake()
@@ -53,76 +52,131 @@ public class GameManager : MonoBehaviour
         isUpgrading = false;
     }
 
-    private void Enemy_OnDestroyed(object sender, System.EventArgs e) => enemiesAlive--;
-
-    private void Enemy_OnKilledByPlayer(object sender, System.EventArgs e)
-    {
-        enemyCount++;
-        enemiesAlive--;
-
-        if (isRoundActive && enemiesAlive == 0 && enemiesToSpawn == 0)
-        {
-            EndRound();
-        }
-    }
-
     private void Update()
     {
+        if (playerHealth.GetPlayerHealth() <= 0)
+        {
+            state = State.GameOver;
+        }
+
         switch (state)
         {
-           case State.WaitingToStart:
-                countdownStartTimer -= Time.deltaTime;
-                gameStartTimerText.text = Mathf.CeilToInt(waitingToStartTimer).ToString();
+            case State.WaitingToStart:
+                HandleStartCountdown();
+                break;
 
-                if (countdownStartTimer <= 0)
-                {
-                    gameStartTimerText.gameObject.SetActive(true);
-                    waitingToStartTimer -= Time.deltaTime;
-
-                    if (waitingToStartTimer <= 0)
-                    {
-                        gameStartTimerText.gameObject.SetActive(false);
-                        StartRound();
-                        state = State.GamePlaying;
-                    }
-                }
+            case State.RoundStarting:
+                HandleRoundStart();
                 break;
 
             case State.GamePlaying:
-                
-                StartRoundNumberTimer();
-
                 HandleSpawning();
-
-                if (!isRoundActive && !isRoundStarting && !isUpgrading)
-                {
-                    roundTimer -= Time.deltaTime;
-
-                    if (roundTimer <= 0)
-                    {
-                        currentRound++;
-                        StartRound();
-                    }
-                }
-
-                if (isRoundActive && enemiesAlive == 0 && enemiesToSpawn == 0)
-                {
-                    EndRound();
-                }
-
-                if (playerHealth.GetPlayerHealth() <= 0)
-                {
-                    state = State.GameOver;
-                }
+                CheckRoundEnd();
                 break;
-            
+
+            case State.RoundEndDelay:
+                HandleRoundEndDelay();
+                break;
+
+            case State.UpgradePhase:
+                break;
+
             case State.GameOver:
                 Loader.Load(Loader.Scene.GameOverScene);
                 break;
         }
-        
     }
 
+    private void HandleStartCountdown()
+    {
+        countdownStartTimer -= Time.deltaTime;
+
+        gameStartTimerText.text = Mathf.CeilToInt(waitingToStartTimer).ToString();
+
+        if (countdownStartTimer <= 0)
+        {
+            gameStartTimerText.gameObject.SetActive(true);
+            waitingToStartTimer -= Time.deltaTime;
+
+            if (waitingToStartTimer <= 0)
+            {
+                gameStartTimerText.gameObject.SetActive(false);
+                StartRound();
+            }
+        }
+    }
+
+    #region Editor Controls
+
+    [ContextMenu("End Game")]
+    public void EndGame() => Loader.Load(Loader.Scene.GameOverScene);
+    
+    [ContextMenu("End Round")]
+    private void EndRound()
+    {
+        state = State.RoundEndDelay;
+        roundTimer = timeBetweenRounds;
+    }
+
+    #endregion
+    
+    #region Round Flow
+
+    private void StartRound()
+    {
+        state = State.RoundStarting;
+
+        roundNumberText.gameObject.SetActive(true);
+        roundNumberText.text = "Round " + currentRound;
+
+        roundNumberTextTimer = roundNumberTextTimerMax;
+
+        enemiesToSpawn = enemiesPerRound + (currentRound - 1) * 2;
+        enemiesAlive = 0;
+    }
+    private void HandleRoundStart()
+    {
+        roundNumberTextTimer -= Time.deltaTime;
+
+        if (roundNumberTextTimer <= 0)
+        {
+            roundNumberText.gameObject.SetActive(false);
+            state = State.GamePlaying;
+        }
+    }
+
+    private void CheckRoundEnd()
+    {
+        if (enemiesAlive == 0 && enemiesToSpawn == 0)
+        {
+            EndRound();
+        }
+    }
+    private void HandleRoundEndDelay()
+    {
+        roundTimer -= Time.deltaTime;
+
+        if (roundTimer <= 0)
+        {
+            if (currentRound % 5 == 0)
+            {
+                EnterUpgradePhase();
+            }
+            else
+            {
+                StartNextRound();
+            }
+        }
+    }
+    private void StartNextRound()
+    {
+        currentRound++;
+        StartRound();
+    }
+
+    #endregion
+    
+    #region Upgrade Phase
     public void UpgradeChosen()
     {
         Player.Instance.LockCursorState();
@@ -131,29 +185,43 @@ public class GameManager : MonoBehaviour
 
         OnUpgradeSelected?.Invoke(this, EventArgs.Empty);
 
-        currentRound++;
-        StartRound();
+        StartNextRound();
     }
 
-    [ContextMenu("End Game")]
-    public void EndGame() => Loader.Load(Loader.Scene.GameOverScene);
-    private void StartRoundNumberTimer()
+    private void EnterUpgradePhase()
     {
-        if (!isRoundStarting && IsPlayerUpgrading()) return;
+        state = State.UpgradePhase;
+        isUpgrading = true;
 
-        roundNumberTextTimer -= Time.deltaTime;
+        OnUpgradePhaseStarted?.Invoke(this, EventArgs.Empty);
+    }
+    #endregion 
 
-        if (roundNumberTextTimer <= 0)
-        {
-            roundNumberText.gameObject.SetActive(false);
-            isRoundStarting = false;
-            isRoundActive = true;
-            roundNumberTextTimer = roundNumberTextTimerMax;
-        }
+    #region Enemy System
+    private void Enemy_OnDestroyed(object sender, System.EventArgs e) => enemiesAlive--;
+
+    private void Enemy_OnKilledByPlayer(object sender, System.EventArgs e)
+    {
+        enemyCount++;
+        enemiesAlive--;
+    }
+    private void SpawnEnemy()
+    {
+        if (enemyPrefab == null || Player.Instance == null)     return;
+
+        Vector3 playerPosition = Player.Instance.transform.position;
+        Vector2 randomCircle = UnityEngine.Random.insideUnitCircle.normalized;
+
+        float randomDistance = UnityEngine.Random.Range(minSpawnDistance, maxSpawnDistance);
+
+        Vector3 spawnPosition = playerPosition + new Vector3(randomCircle.x, 0 , randomCircle.y) * randomDistance;
+        spawnPosition.y = playerPosition.y + UnityEngine.Random.Range(minSpawnHeight, maxSpawnHeight);
+        
+        Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
     }
     private void HandleSpawning()
     {
-        if (!isRoundActive && IsPlayerUpgrading()) return;
+        if (enemiesToSpawn <= 0) return;
 
         if (enemiesToSpawn > 0)
         {
@@ -170,48 +238,9 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    private void StartRound()
-    {
-        if (IsPlayerUpgrading())
-        {
-            isUpgrading = false;
-            return;
-        }
 
-        isRoundStarting = true;
-        isRoundActive = false;
-        
-        roundNumberText.gameObject.SetActive(true);
-        roundNumberText.text = "Round " + currentRound;
-        roundNumberTextTimer = roundNumberTextTimerMax;
-
-        enemiesToSpawn = enemiesPerRound + (currentRound - 1) * 2; // difficulty scaling
-        enemiesAlive = 0;
-    }
+    #endregion
     
-    [ContextMenu("End Round")]
-    private void EndRound()
-    {
-        isRoundActive = false;
-        roundTimer = timeBetweenRounds;
-        isUpgrading = true;
-        OnUpgradePhaseStarted?.Invoke(this, EventArgs.Empty);
-    }
-    private void SpawnEnemy()
-    {
-        if (enemyPrefab == null || Player.Instance == null)     return;
-
-        Vector3 playerPosition = Player.Instance.transform.position;
-        Vector2 randomCircle = UnityEngine.Random.insideUnitCircle.normalized;
-
-        float randomDistance = UnityEngine.Random.Range(minSpawnDistance, maxSpawnDistance);
-
-        Vector3 spawnPosition = playerPosition + new Vector3(randomCircle.x, 0 , randomCircle.y) * randomDistance;
-        spawnPosition.y = playerPosition.y + UnityEngine.Random.Range(minSpawnHeight, maxSpawnHeight);
-        
-        Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
-    }
-
     public int GetEnemyKilledCount() => enemyCount;
     public int GetRoundsCompleted() => currentRound - 1;
     public bool IsPlayerUpgrading() => isUpgrading;

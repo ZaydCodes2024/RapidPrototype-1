@@ -13618,7 +13618,7 @@ MonoBehaviour:
   gameStartTimerText: {fileID: 1322668518}
   roundNumberText: {fileID: 581900273}
   enemiesPerRound: 5
-  timeBetweenRounds: 3
+  timeBetweenRounds: 2
 --- !u!114 &1460333065
 MonoBehaviour:
   m_ObjectHideFlags: 0

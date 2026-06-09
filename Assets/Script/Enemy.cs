@@ -38,8 +38,6 @@ public class Enemy : MonoBehaviour, IHealth
 
         maxDamage = EnemyStats.Instance.Damage;
         currentDamage = maxDamage;
-
-        Debug.Log($"Stats: {maxHealth}, {maxDamage}, {maxMoveSpeed}");
     }
 
     private void Update() => EnemyMovement();
